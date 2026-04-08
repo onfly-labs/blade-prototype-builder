@@ -121,6 +121,7 @@ const reservations: Reservation[] = [
     approvalDeadline: null,
     hoursLeft: 0,
     myTrip: true,
+    aiDecision: "approved",
   },
   {
     id: "#22C301",
