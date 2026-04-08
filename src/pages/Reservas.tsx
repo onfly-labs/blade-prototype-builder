@@ -31,6 +31,7 @@ type Reservation = {
   hoursLeft: number;
   myTrip: boolean;
   aiDecision?: "approved" | "reproved" | null;
+  aiReason?: string;
 };
 
 const typeMap: Record<string, { label: string; icon: typeof Plane; slug: string }> = {
