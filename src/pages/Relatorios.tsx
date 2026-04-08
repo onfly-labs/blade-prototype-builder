@@ -312,7 +312,8 @@ const Relatorios = () => {
 
   // Filtered list
   const filtered = mockApprovals.filter((a) => {
-    if (filterStatus !== "all" && a.status !== Number(filterStatus)) return false;
+    if (filterStatus === "approved" && a.status !== 1 && a.status !== 3) return false;
+    if (filterStatus !== "all" && filterStatus !== "approved" && a.status !== Number(filterStatus)) return false;
     if (filterType !== "all" && a.type !== filterType) return false;
     return true;
   });
