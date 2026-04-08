@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
