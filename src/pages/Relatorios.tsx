@@ -5,11 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Status: 1=Aprovada, 2=Reprovada, 3=Aprovação Automática, 4=Pendente, 5=Expirada
+// Status: 1=Aprovada, 2=Reprovada, 3=Aprovada (automática), 4=Pendente, 5=Expirada
 const statusMap: Record<number, { label: string; color: string }> = {
   1: { label: "Aprovada", color: "bg-green-100 text-green-700 border-green-200" },
   2: { label: "Reprovada", color: "bg-red-100 text-red-700 border-red-200" },
-  3: { label: "Aprovação Automática", color: "bg-blue-100 text-blue-700 border-blue-200" },
+  3: { label: "Aprovada", color: "bg-green-100 text-green-700 border-green-200" },
   4: { label: "Pendente", color: "bg-yellow-100 text-yellow-700 border-yellow-200" },
   5: { label: "Expirada", color: "bg-gray-100 text-gray-600 border-gray-200" },
 };
