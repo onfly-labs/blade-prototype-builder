@@ -4,6 +4,7 @@ import AiAnalysisModal from "@/components/AiAnalysisModal";
 import Layout from "@/components/layout/Layout";
 import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { getActiveRules } from "@/lib/rulesStore";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
