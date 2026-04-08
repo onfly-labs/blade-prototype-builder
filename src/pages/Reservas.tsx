@@ -416,8 +416,9 @@ const Reservas = () => {
                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Viajante</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Centro de Custos</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Aprovação</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Ações</th>
+                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
+                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">IA</th>
+                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Ações</th>
                 </tr>
               </thead>
               <tbody>
