@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -230,6 +230,14 @@ const Reservas = () => {
     return data;
   }, [activeTab, filterId, filterType, filterStatus, filterTraveler, filterCostCenter, filterOrigin, filterDestination]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const perPage = 50;
+  const totalPages = Math.max(1, Math.ceil(filteredReservations.length / perPage));
+  const paginatedReservations = filteredReservations.slice((currentPage - 1) * perPage, currentPage * perPage);
+
+  // Reset page when filters/tab change
+  useMemo(() => { setCurrentPage(1); }, [activeTab, filterId, filterType, filterStatus, filterTraveler, filterCostCenter, filterOrigin, filterDestination]);
+
   return (
     <Layout>
       <TooltipProvider>
@@ -388,7 +396,7 @@ const Reservas = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredReservations.map((r) => {
+                {paginatedReservations.map((r) => {
                   const isUrgent = r.status === "Pendente" && r.hoursLeft <= 12;
                   const Icon = r.icon;
 
@@ -475,6 +483,23 @@ const Reservas = () => {
               </tbody>
             </table>
           </div>
+
+          {filteredReservations.length > 0 && (
+            <div className="flex items-center justify-between mt-4 px-2">
+              <p className="text-sm text-muted-foreground">
+                Exibindo {((currentPage - 1) * perPage) + 1}–{Math.min(currentPage * perPage, filteredReservations.length)} de {filteredReservations.length} reservas
+              </p>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <span className="text-sm font-medium">{currentPage} / {totalPages}</span>
+                <Button variant="outline" size="sm" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          )}
 
           {filteredReservations.length === 0 && (
             <div className="text-center py-16">
