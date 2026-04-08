@@ -501,7 +501,7 @@ const Reservas = () => {
                 <span className="ml-3 text-muted-foreground">Carregando reservas...</span>
               </div>
             ) : (
-              <table className="w-full">
+              <table className="w-full min-w-[1200px]">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Reserva</th>
