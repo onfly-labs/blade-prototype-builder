@@ -60,7 +60,7 @@ const LandingPage = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBg})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b2a45]/60 via-[#0b2a45]/40 to-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b2a45]/85 via-[#0b2a45]/70 to-white" />
         {/* Large white airplane SVG */}
         <svg className="absolute right-[-5%] top-[10%] w-[600px] h-[600px] opacity-[0.07]" viewBox="0 0 512 512" fill="white" xmlns="http://www.w3.org/2000/svg">
           <path d="M497.7 75.3L437 14.7C430.7 8.4 422.2 4.8 413.3 4.8s-17.3 3.6-23.7 9.9L295 109.3 53.3 25.7c-7-2.4-14.6-1.1-20.3 3.5L9.4 49.9c-7.2 5.9-9.9 15.5-6.8 24.3l85.7 240.6L30.1 373c-16.3 16.3-16.3 42.7 0 59l50 50c16.3 16.3 42.7 16.3 59 0l58.2-58.2L438 510.6c8.8 3.1 18.4 .4 24.3-6.8l20.7-23.6c4.6-5.7 5.9-13.3 3.5-20.3l-83.6-241.7 94.7-94.7c13.1-13 13.1-34.3.1-47.4v-.4zM147.3 440.1l-7.4 7.4c-2.4 2.4-6.3 2.4-8.7 0l-67.2-67.2c-2.4-2.4-2.4-6.3 0-8.7l7.4-7.4 75.9 75.9z" />
