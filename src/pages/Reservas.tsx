@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2 } from "lucide-react";
+import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
