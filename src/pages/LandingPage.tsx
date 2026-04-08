@@ -78,7 +78,7 @@ const LandingPage = () => {
                 Reservas rápidas.
                 <br />
                 Aprovações{" "}
-                <span className="text-[#00a0e4]">automáticas.</span>
+                <span className="text-[#00a0e4]">análise automática de aprovações.</span>
                 <br />
                 Controle total.
               </h1>
