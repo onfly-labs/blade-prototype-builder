@@ -30,16 +30,17 @@ const AprovacoesAutomaticas = () => {
 
   const handleSave = () => {
     if (!formName.trim()) return;
+    let updated: Rule[];
     if (editingRule) {
-      setRules((prev) =>
-        prev.map((r) => (r.id === editingRule.id ? { ...r, name: formName, description: formDesc } : r))
-      );
+      updated = rules.map((r) => (r.id === editingRule.id ? { ...r, name: formName, description: formDesc } : r));
       toast({ title: "Regra atualizada", description: `"${formName}" foi salva com sucesso.` });
     } else {
       const newRule: Rule = { id: Date.now(), name: formName, description: formDesc, active: true };
-      setRules((prev) => [...prev, newRule]);
+      updated = [...rules, newRule];
       toast({ title: "Regra salva", description: `"${formName}" foi criada e ativada.` });
     }
+    setRules(updated);
+    saveRules(updated);
     setView("list");
   };
 
