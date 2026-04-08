@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink } from "lucide-react";
+import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -57,7 +57,7 @@ const reservations: Reservation[] = [
     id: "#07K412",
     numericId: 6690079,
     type: "Hotel",
-    icon: MapPin,
+    icon: Hotel,
     origin: "Rio de Janeiro",
     destination: "Hotel Copacabana Palace",
     date: "17/04/2026 – 20/04/2026",
@@ -89,7 +89,7 @@ const reservations: Reservation[] = [
     id: "#18F291",
     numericId: 6691062,
     type: "Hotel",
-    icon: MapPin,
+    icon: Hotel,
     origin: "Brasília",
     destination: "Hotel Nacional",
     date: "15/04/2026 – 17/04/2026",
