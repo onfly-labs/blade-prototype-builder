@@ -687,6 +687,7 @@ const Reservas = () => {
           onOpenChange={(open) => !open && setAiModal(null)}
           decision={aiModal.decision}
           reservationId={aiModal.id}
+          reason={aiModal.reason}
         />
       )}
     </Layout>
