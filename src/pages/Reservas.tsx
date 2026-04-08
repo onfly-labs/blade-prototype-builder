@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -103,10 +103,10 @@ const reservations: Reservation[] = [
   },
   {
     id: "#22C301",
-    type: "Hotel",
-    icon: MapPin,
+    type: "Carro",
+    icon: Car,
     origin: "São Paulo",
-    destination: "Hotel Fasano",
+    destination: "Campinas",
     date: "05/03/2026 – 07/03/2026",
     tripDate: "2026-03-05",
     status: "Aprovada",
@@ -133,10 +133,10 @@ const reservations: Reservation[] = [
   },
   {
     id: "#25G890",
-    type: "Aéreo",
-    icon: Plane,
-    origin: "Salvador (SSA)",
-    destination: "São Paulo (GRU)",
+    type: "Ônibus",
+    icon: Bus,
+    origin: "Salvador",
+    destination: "Recife",
     date: "01/03/2026",
     tripDate: "2026-03-01",
     status: "Expirada",
