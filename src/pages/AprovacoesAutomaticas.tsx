@@ -9,7 +9,7 @@ type View = "list" | "form";
 
 const AprovacoesAutomaticas = () => {
   const [view, setView] = useState<View>("list");
-  const [rules, setRules] = useState<Rule[]>(initialRules);
+  const [rules, setRules] = useState<Rule[]>(getRules());
   const [editingRule, setEditingRule] = useState<Rule | null>(null);
   const [formName, setFormName] = useState("");
   const [formDesc, setFormDesc] = useState("");
