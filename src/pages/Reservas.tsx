@@ -130,6 +130,7 @@ const statusColor = (status: string) => {
 };
 
 const Reservas = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState(0);
   const [notified, setNotified] = useState<Record<string, boolean>>({});
   const [showFilters, setShowFilters] = useState(false);
