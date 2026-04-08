@@ -17,8 +17,12 @@ Deno.serve(async (req) => {
       })
     }
 
-    const targetUrl = `${agentUrl}/api/agent/api-logs`
-    console.log('Calling agent URL:', targetUrl)
+    const url = new URL(req.url)
+    const testPath = url.searchParams.get('path') || '/api/agent/api-logs'
+    const targetUrl = `${agentUrl}${testPath}`
+
+    console.log('[DEBUG] ONFLY_AGENT_API_URL:', agentUrl)
+    console.log('[DEBUG] Target URL:', targetUrl)
 
     const response = await fetch(targetUrl, {
       method: 'GET',
@@ -26,24 +30,25 @@ Deno.serve(async (req) => {
     })
 
     const responseText = await response.text()
-    console.log('Agent response status:', response.status)
-    console.log('Agent response body (first 500 chars):', responseText.substring(0, 500))
+    console.log('[DEBUG] Response status:', response.status)
+    console.log('[DEBUG] Response:', responseText.substring(0, 500))
 
-    // Try to parse as JSON
     try {
       const data = JSON.parse(responseText)
-      return new Response(JSON.stringify(data), {
-        status: response.status,
+      return new Response(JSON.stringify({ 
+        debug: { urlCalled: targetUrl, status: response.status },
+        data 
+      }), {
+        status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     } catch {
       return new Response(JSON.stringify({ 
-        error: 'Agent returned non-JSON response', 
-        status: response.status,
-        urlCalled: targetUrl,
-        preview: responseText.substring(0, 200)
+        debug: { urlCalled: targetUrl, status: response.status },
+        error: 'Non-JSON response',
+        preview: responseText.substring(0, 300)
       }), {
-        status: 502,
+        status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
