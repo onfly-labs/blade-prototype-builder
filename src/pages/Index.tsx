@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import { Plane, Hotel, Car, Concierge } from "lucide-react";
+import { Plane, Hotel, Car, ConciergeBell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const searchTabs = [
