@@ -1,19 +1,33 @@
-import { Globe, HelpCircle, Rocket, Bell, User } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Globe, HelpCircle, Rocket, Bell, User, LogOut } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navItems = [
-  { label: "Reservas", path: "/" },
+  { label: "Reservas", path: "/reservas" },
   { label: "Aprovações Automáticas", path: "/aprovacoes-automaticas" },
   { label: "Relatórios", path: "/relatorios" },
 ];
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between sticky top-0 z-50">
       <div className="flex items-center gap-8">
-        <Link to="/" className="flex items-center gap-1">
+        <Link to="/reservas" className="flex items-center gap-1">
           <span className="text-2xl font-extrabold text-primary tracking-tight">onfly</span>
           <Globe className="w-6 h-6 text-primary" />
         </Link>
@@ -45,9 +59,24 @@ const Header = () => {
         <button className="relative text-muted-foreground hover:text-foreground transition-colors">
           <Bell className="w-5 h-5" />
         </button>
-        <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center">
-          <User className="w-5 h-5 text-muted-foreground" />
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors">
+              <User className="w-5 h-5 text-muted-foreground" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            {user && (
+              <div className="px-3 py-2 text-xs text-muted-foreground border-b border-border truncate">
+                {user.email}
+              </div>
+            )}
+            <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive cursor-pointer">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
