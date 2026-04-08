@@ -3,9 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index";
 import Reservas from "./pages/Reservas";
-import Relatorios from "./pages/Relatorios";
+import AprovacoesAutomaticas from "./pages/AprovacoesAutomaticas";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -17,9 +16,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/reservas" element={<Reservas />} />
-          <Route path="/relatorios" element={<Relatorios />} />
+          <Route path="/" element={<Reservas />} />
+          <Route path="/aprovacoes-automaticas" element={<AprovacoesAutomaticas />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
