@@ -47,7 +47,7 @@ const reservations: Reservation[] = [
     destination: "Rio de Janeiro (SDU)",
     date: "17/04/2026",
     tripDate: "2026-04-17",
-    status: "Confirmada",
+    status: "Aprovada",
     traveler: "Ivan Silva",
     costCenter: "CC-001 Marketing",
     approvalDeadline: "2026-04-10T14:00:00",
@@ -179,7 +179,7 @@ const formatTimeLeft = (hours: number) => {
 
 const statusColor = (status: string) => {
   switch (status) {
-    case "Confirmada": return "bg-green-100 text-green-700";
+    case "Aprovada": return "bg-green-100 text-green-700";
     case "Aprovada": return "bg-green-100 text-green-700";
     case "Expirada": return "bg-red-100 text-red-700";
     case "Pendente": return "bg-yellow-100 text-yellow-700";
@@ -229,7 +229,7 @@ const Reservas = () => {
     // Tab filtering
     if (activeTab === 0) {
       // Próximas viagens: data futura (Confirmada, Pendente ou Expirada com data futura)
-      data = data.filter((r) => new Date(r.tripDate) >= today && (r.status === "Confirmada" || r.status === "Pendente" || r.status === "Expirada"));
+      data = data.filter((r) => new Date(r.tripDate) >= today && (r.status === "Aprovada" || r.status === "Pendente" || r.status === "Expirada"));
     } else if (activeTab === 1) {
       // Minhas viagens
       data = data.filter((r) => r.myTrip);
