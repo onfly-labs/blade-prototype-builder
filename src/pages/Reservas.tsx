@@ -396,7 +396,7 @@ const Reservas = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredReservations.map((r) => {
+                {paginatedReservations.map((r) => {
                   const isUrgent = r.status === "Pendente" && r.hoursLeft <= 12;
                   const Icon = r.icon;
 
