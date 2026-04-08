@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 const navItems = [
   { label: "Reservas", path: "/" },
   { label: "Aprovações Automáticas", path: "/aprovacoes-automaticas" },
+  { label: "Relatórios", path: "/relatorios" },
 ];
 
 const Header = () => {
