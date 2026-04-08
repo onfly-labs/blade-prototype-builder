@@ -189,8 +189,8 @@ const Reservas = () => {
       // Minhas viagens
       data = data.filter((r) => r.myTrip);
     } else if (activeTab === 2) {
-      // Histórico: todas aprovadas
-      data = data.filter((r) => r.status === "Aprovada");
+      // Histórico: aprovadas + expiradas
+      data = data.filter((r) => r.status === "Aprovada" || r.status === "Expirada");
     }
 
     // Additional filters
