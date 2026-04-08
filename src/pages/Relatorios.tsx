@@ -392,9 +392,8 @@ const Relatorios = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todos os status</SelectItem>
-                  <SelectItem value="1">Aprovada</SelectItem>
+                  <SelectItem value="approved">Aprovada</SelectItem>
                   <SelectItem value="2">Reprovada</SelectItem>
-                  <SelectItem value="3">Auto. Aprovada</SelectItem>
                   <SelectItem value="4">Pendente</SelectItem>
                   <SelectItem value="5">Expirada</SelectItem>
                 </SelectContent>
