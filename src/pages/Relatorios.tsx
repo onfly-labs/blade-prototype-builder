@@ -3,6 +3,7 @@ import { FileText, CheckCircle, Zap, XCircle, AlertTriangle, Clock, Plane, Hotel
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import AiAnalysisModal from "@/components/AiAnalysisModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Status: 1=Aprovada, 2=Reprovada, 3=Aprovada (automática), 4=Pendente, 5=Expirada

@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import AiAnalysisModal from "@/components/AiAnalysisModal";
 import Layout from "@/components/layout/Layout";
 import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot } from "lucide-react";
 
