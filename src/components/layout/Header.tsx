@@ -2,9 +2,8 @@ import { Globe, HelpCircle, Rocket, Bell, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
-  { label: "Início", path: "/" },
-  { label: "Reservas", path: "/reservas" },
-  { label: "Relatórios", path: "/relatorios" },
+  { label: "Reservas", path: "/" },
+  { label: "Aprovações Automáticas", path: "/aprovacoes-automaticas" },
 ];
 
 const Header = () => {
