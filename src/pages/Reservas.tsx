@@ -484,6 +484,23 @@ const Reservas = () => {
             </table>
           </div>
 
+          {filteredReservations.length > 0 && (
+            <div className="flex items-center justify-between mt-4 px-2">
+              <p className="text-sm text-muted-foreground">
+                Exibindo {((currentPage - 1) * perPage) + 1}–{Math.min(currentPage * perPage, filteredReservations.length)} de {filteredReservations.length} reservas
+              </p>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <span className="text-sm font-medium">{currentPage} / {totalPages}</span>
+                <Button variant="outline" size="sm" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+
           {filteredReservations.length === 0 && (
             <div className="text-center py-16">
               <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
