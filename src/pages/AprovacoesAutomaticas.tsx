@@ -3,19 +3,7 @@ import Layout from "@/components/layout/Layout";
 import { ShieldCheck, Plus, ToggleLeft, ToggleRight, Trash2, Edit, Save, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-
-interface Rule {
-  id: number;
-  name: string;
-  description: string;
-  active: boolean;
-}
-
-const initialRules: Rule[] = [
-  { id: 1, name: "Limite de valor diária hotel", description: "Limitar valor de diária de hotel a R$500", active: true },
-  { id: 2, name: "Antecedência mínima aéreo", description: "Passagens aéreas devem ser compradas com 7 dias de antecedência", active: true },
-  { id: 3, name: "Aprovação para internacional", description: "Viagens internacionais precisam de aprovação do gestor", active: false },
-];
+import { getRules, saveRules, type Rule } from "@/lib/rulesStore";
 
 type View = "list" | "form";
 
