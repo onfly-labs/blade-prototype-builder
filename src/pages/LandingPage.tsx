@@ -74,7 +74,7 @@ const LandingPage = () => {
                 <Zap className="w-3.5 h-3.5" />
                 Gestão inteligente de viagens
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight text-[#0b2a45] mb-5">
+              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight text-white mb-5">
                 Reservas rápidas.
                 <br />
                 Aprovações{" "}
