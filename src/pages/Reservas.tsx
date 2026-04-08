@@ -418,11 +418,14 @@ const Reservas = () => {
                 {paginatedReservations.map((r) => {
                   const isUrgent = r.status === "Pendente" && r.hoursLeft <= 12;
                   const Icon = r.icon;
+                  const detailHref = getDetailUrl(r.type, r.numericId);
 
                   return (
                     <tr key={r.id} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
                       <td className="px-5 py-4">
-                        <span className="text-sm font-mono font-semibold text-foreground">{r.id}</span>
+                        <a href={detailHref} target="_blank" rel="noopener noreferrer" className="text-sm font-mono font-semibold text-primary hover:underline">
+                          {r.id}
+                        </a>
                       </td>
                       <td className="px-5 py-4">
                         <Tooltip>
