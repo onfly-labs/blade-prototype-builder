@@ -504,6 +504,14 @@ const Relatorios = () => {
           </div>
         </div>
       </div>
+      {aiModal && (
+        <AiAnalysisModal
+          open={aiModal.open}
+          onOpenChange={(open) => !open && setAiModal(null)}
+          decision={aiModal.decision}
+          reservationId={aiModal.id}
+        />
+      )}
     </Layout>
   );
 };
