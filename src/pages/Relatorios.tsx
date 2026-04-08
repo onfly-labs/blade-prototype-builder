@@ -1,18 +1,58 @@
 import Layout from "@/components/layout/Layout";
-import { FileText, TrendingUp, Users, DollarSign, Calendar } from "lucide-react";
+import { FileText, CheckCircle, Zap, XCircle, AlertTriangle, Clock } from "lucide-react";
 
-const gastos = [
-  { categoria: "Aéreo", valor: "R$ 12.450,00", percentual: 45 },
-  { categoria: "Hotel", valor: "R$ 8.200,00", percentual: 30 },
-  { categoria: "Alimentação", valor: "R$ 3.800,00", percentual: 14 },
-  { categoria: "Transporte", valor: "R$ 3.050,00", percentual: 11 },
+const resumoAprovacao = [
+  { label: "Total de solicitações", valor: 42, icon: FileText, cor: "text-primary" },
+  { label: "Aprovadas", valor: 28, icon: CheckCircle, cor: "text-green-600" },
+  { label: "Aprovação automática", valor: 18, icon: Zap, cor: "text-blue-500" },
+  { label: "Reprovadas / Falhas", valor: 8, icon: XCircle, cor: "text-red-500" },
+  { label: "Pendentes", valor: 6, icon: Clock, cor: "text-yellow-500" },
 ];
 
-const viajantes = [
-  { nome: "Ivan Silva", viagens: 8, gasto: "R$ 14.200,00" },
-  { nome: "Maria Santos", viagens: 5, gasto: "R$ 9.800,00" },
-  { nome: "Carlos Oliveira", viagens: 3, gasto: "R$ 6.500,00" },
-  { nome: "Ana Costa", viagens: 2, gasto: "R$ 4.100,00" },
+const falhasFluxo = [
+  {
+    id: 1,
+    viajante: "Carlos Oliveira",
+    tipo: "Aéreo",
+    trecho: "GRU → MIA",
+    fluxo: "Aprovação Gerencial",
+    motivo: "Orçamento excedido – sem aprovação do diretor",
+    data: "02/04/2026",
+  },
+  {
+    id: 2,
+    viajante: "Ana Costa",
+    tipo: "Hotel",
+    trecho: "Hotel Fasano - SP",
+    fluxo: "Política de Viagem",
+    motivo: "Valor da diária acima do limite permitido",
+    data: "05/04/2026",
+  },
+  {
+    id: 3,
+    viajante: "João Pereira",
+    tipo: "Aéreo",
+    trecho: "BSB → GRU",
+    fluxo: "Aprovação Automática",
+    motivo: "Reserva expirada antes da conclusão do fluxo",
+    data: "07/04/2026",
+  },
+  {
+    id: 4,
+    viajante: "Maria Santos",
+    tipo: "Aéreo",
+    trecho: "CGH → SDU",
+    fluxo: "Aprovação Gerencial",
+    motivo: "Aprovador não respondeu dentro do prazo (48h)",
+    data: "08/04/2026",
+  },
+];
+
+const aprovacoesPorFluxo = [
+  { fluxo: "Aprovação Automática", aprovadas: 18, reprovadas: 1, total: 19 },
+  { fluxo: "Aprovação Gerencial", aprovadas: 7, reprovadas: 5, total: 12 },
+  { fluxo: "Aprovação Diretoria", aprovadas: 3, reprovadas: 2, total: 5 },
+  { fluxo: "Política de Viagem", aprovadas: 0, reprovadas: 0, total: 6 },
 ];
 
 const Relatorios = () => {
@@ -25,76 +65,78 @@ const Relatorios = () => {
             <FileText className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-foreground">Relatórios</h1>
-            <p className="text-sm text-muted-foreground">Visão geral de gastos e viajantes</p>
+            <h1 className="text-xl font-bold text-foreground">Relatórios de Aprovação</h1>
+            <p className="text-sm text-muted-foreground">Visão geral dos fluxos de aprovação de viagens — Abril/2026</p>
           </div>
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          <div className="bg-card border border-border rounded-2xl p-5">
-            <div className="flex items-center gap-2 text-muted-foreground mb-2">
-              <DollarSign className="w-4 h-4" />
-              <span className="text-sm">Total de gastos</span>
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
+          {resumoAprovacao.map((item) => (
+            <div key={item.label} className="bg-card border border-border rounded-2xl p-4 text-center">
+              <item.icon className={`w-5 h-5 mx-auto mb-2 ${item.cor}`} />
+              <p className="text-2xl font-bold text-foreground">{item.valor}</p>
+              <p className="text-xs text-muted-foreground mt-1">{item.label}</p>
             </div>
-            <p className="text-2xl font-bold text-foreground">R$ 27.500,00</p>
-            <p className="text-xs text-green-600 mt-1 flex items-center gap-1"><TrendingUp className="w-3 h-3" />-12% vs mês anterior</p>
-          </div>
-          <div className="bg-card border border-border rounded-2xl p-5">
-            <div className="flex items-center gap-2 text-muted-foreground mb-2">
-              <Users className="w-4 h-4" />
-              <span className="text-sm">Viajantes ativos</span>
-            </div>
-            <p className="text-2xl font-bold text-foreground">18</p>
-            <p className="text-xs text-muted-foreground mt-1">neste mês</p>
-          </div>
-          <div className="bg-card border border-border rounded-2xl p-5">
-            <div className="flex items-center gap-2 text-muted-foreground mb-2">
-              <Calendar className="w-4 h-4" />
-              <span className="text-sm">Total de viagens</span>
-            </div>
-            <p className="text-2xl font-bold text-foreground">24</p>
-            <p className="text-xs text-muted-foreground mt-1">em abril/2026</p>
-          </div>
+          ))}
         </div>
 
-        {/* Gastos por Categoria */}
+        {/* Aprovações por Fluxo */}
         <div className="bg-card border border-border rounded-2xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Gastos por Categoria</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Aprovações por Fluxo</h2>
           <div className="space-y-4">
-            {gastos.map((g) => (
-              <div key={g.categoria}>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-foreground font-medium">{g.categoria}</span>
-                  <span className="text-muted-foreground">{g.valor} ({g.percentual}%)</span>
+            {aprovacoesPorFluxo.map((f) => {
+              const pctAprov = f.total > 0 ? Math.round((f.aprovadas / f.total) * 100) : 0;
+              const pctReprov = f.total > 0 ? Math.round((f.reprovadas / f.total) * 100) : 0;
+              return (
+                <div key={f.fluxo}>
+                  <div className="flex justify-between text-sm mb-1.5">
+                    <span className="text-foreground font-medium">{f.fluxo}</span>
+                    <span className="text-muted-foreground text-xs">
+                      {f.aprovadas} aprovadas · {f.reprovadas} reprovadas · {f.total} total
+                    </span>
+                  </div>
+                  <div className="flex w-full h-2.5 rounded-full overflow-hidden bg-secondary">
+                    <div className="bg-green-500 h-full transition-all" style={{ width: `${pctAprov}%` }} />
+                    <div className="bg-red-400 h-full transition-all" style={{ width: `${pctReprov}%` }} />
+                  </div>
                 </div>
-                <div className="w-full bg-secondary rounded-full h-2.5">
-                  <div className="bg-primary rounded-full h-2.5 transition-all" style={{ width: `${g.percentual}%` }} />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* Top Viajantes */}
+        {/* Falhas no Fluxo de Aprovação */}
         <div className="bg-card border border-border rounded-2xl overflow-hidden">
-          <div className="p-5 border-b border-border">
-            <h2 className="text-lg font-semibold text-foreground">Top Viajantes</h2>
+          <div className="p-5 border-b border-border flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-red-500" />
+            <h2 className="text-lg font-semibold text-foreground">Falhas no Fluxo de Aprovação</h2>
           </div>
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Colaborador</th>
-                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Viagens</th>
-                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Gasto total</th>
+                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Viajante</th>
+                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Trecho</th>
+                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Fluxo</th>
+                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Motivo da falha</th>
+                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Data</th>
               </tr>
             </thead>
             <tbody>
-              {viajantes.map((v) => (
-                <tr key={v.nome} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
-                  <td className="px-5 py-4 text-sm font-medium text-foreground">{v.nome}</td>
-                  <td className="px-5 py-4 text-sm text-foreground">{v.viagens}</td>
-                  <td className="px-5 py-4 text-sm text-foreground">{v.gasto}</td>
+              {falhasFluxo.map((f) => (
+                <tr key={f.id} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
+                  <td className="px-5 py-4 text-sm font-medium text-foreground">{f.viajante}</td>
+                  <td className="px-5 py-4">
+                    <p className="text-sm text-foreground">{f.trecho}</p>
+                    <p className="text-xs text-muted-foreground">{f.tipo}</p>
+                  </td>
+                  <td className="px-5 py-4">
+                    <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-accent text-accent-foreground">
+                      {f.fluxo}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-sm text-muted-foreground max-w-xs">{f.motivo}</td>
+                  <td className="px-5 py-4 text-sm text-foreground">{f.data}</td>
                 </tr>
               ))}
             </tbody>
