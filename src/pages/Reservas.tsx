@@ -225,7 +225,31 @@ const Reservas = () => {
     }
   };
 
-  const mockData = [
+  const handleAnalyzeAllPending = async () => {
+    const pending = reservations.filter(r => r.status === "Pendente");
+    if (pending.length === 0) {
+      toast({ title: "Sem reservas pendentes", description: "Não há reservas pendentes para analisar." });
+      return;
+    }
+    setAnalyzingAll(true);
+    let approved = 0, rejected = 0, errors = 0;
+    for (const r of pending) {
+      try {
+        await handleAnalyzeWithAI(r);
+        const updated = reservations.find(res => res.id === r.id);
+        if (updated?.aiDecision === "approved") approved++;
+        else if (updated?.aiDecision === "reproved") rejected++;
+      } catch {
+        errors++;
+      }
+    }
+    setAnalyzingAll(false);
+    toast({
+      title: "Análise concluída",
+      description: `${pending.length} reservas analisadas pela IA.`,
+    });
+  };
+
     { id: 6690003, type: "HotelOrder", decidedDate: null, createdDate: "2026-04-08 11:38:04", expiresAt: "2026-04-09 11:38:04", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 64710, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Visitas com o Chiabai" },
     { id: 6690079, type: "HotelOrder", decidedDate: null, createdDate: "2026-04-08 11:44:06", expiresAt: "2026-04-09 11:44:06", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 17174, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Acompanhar Filipe Chiabai" },
     { id: 6690149, type: "FlyOrder", decidedDate: null, createdDate: "2026-04-08 11:48:51", expiresAt: "2026-04-09 11:48:51", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 97345, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Visita na Zurich com o Lucas Pirchiner" },
