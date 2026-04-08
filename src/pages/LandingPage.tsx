@@ -105,7 +105,7 @@ const LandingPage = () => {
                 ].map((s) => (
                   <div key={s.label}>
                     <p className="text-2xl font-extrabold text-[#00a0e4]">{s.value}</p>
-                    <p className="text-xs text-white/90 mt-0.5 font-medium">{s.label}</p>
+                    <p className="text-xs text-[#00a0e4] mt-0.5 font-medium">{s.label}</p>
                   </div>
                 ))}
               </div>
