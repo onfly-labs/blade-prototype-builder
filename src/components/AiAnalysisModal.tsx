@@ -40,9 +40,10 @@ const statusIcon = (status: string) => {
   }
 };
 
-export default function AiAnalysisModal({ open, onOpenChange, decision, reservationId }: AiAnalysisModalProps) {
+export default function AiAnalysisModal({ open, onOpenChange, decision, reservationId, reason }: AiAnalysisModalProps) {
   const analysis = decision === "approved" ? approvedAnalysis : reprovedAnalysis;
   const isApproved = decision === "approved";
+  const displaySummary = reason || analysis.summary;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
