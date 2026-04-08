@@ -60,17 +60,21 @@ const LandingPage = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBg})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b2a45]/60 via-[#0b2a45]/40 to-white" />
+        {/* Large white airplane SVG */}
+        <svg className="absolute right-[-5%] top-[10%] w-[600px] h-[600px] opacity-[0.07]" viewBox="0 0 512 512" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M497.7 75.3L437 14.7C430.7 8.4 422.2 4.8 413.3 4.8s-17.3 3.6-23.7 9.9L295 109.3 53.3 25.7c-7-2.4-14.6-1.1-20.3 3.5L9.4 49.9c-7.2 5.9-9.9 15.5-6.8 24.3l85.7 240.6L30.1 373c-16.3 16.3-16.3 42.7 0 59l50 50c16.3 16.3 42.7 16.3 59 0l58.2-58.2L438 510.6c8.8 3.1 18.4 .4 24.3-6.8l20.7-23.6c4.6-5.7 5.9-13.3 3.5-20.3l-83.6-241.7 94.7-94.7c13.1-13 13.1-34.3.1-47.4v-.4zM147.3 440.1l-7.4 7.4c-2.4 2.4-6.3 2.4-8.7 0l-67.2-67.2c-2.4-2.4-2.4-6.3 0-8.7l7.4-7.4 75.9 75.9z" />
+        </svg>
 
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - copy */}
             <div className="py-12 lg:py-20">
-              <div className="inline-flex items-center gap-2 bg-[#00a0e4]/10 text-[#00a0e4] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
+              <div className="inline-flex items-center gap-2 bg-white/15 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
                 <Zap className="w-3.5 h-3.5" />
                 Gestão inteligente de viagens
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight text-[#0b2a45] mb-5">
+              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight text-white mb-5">
                 Reservas rápidas.
                 <br />
                 Aprovações{" "}
@@ -78,7 +82,7 @@ const LandingPage = () => {
                 <br />
                 Controle total.
               </h1>
-              <p className="text-lg text-gray-500 max-w-md mb-8 leading-relaxed">
+              <p className="text-lg text-white/70 max-w-md mb-8 leading-relaxed">
                 Reduza de horas para minutos o ciclo completo de reserva, aprovação e relatório de viagens corporativas.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
@@ -93,15 +97,15 @@ const LandingPage = () => {
               </div>
 
               {/* Mini stats */}
-              <div className="flex gap-8 mt-10 pt-8 border-t border-gray-200/60">
+              <div className="flex gap-8 mt-10 pt-8 border-t border-white/20">
                 {[
                   { value: "3min", label: "tempo médio de reserva" },
                   { value: "85%", label: "aprovações automáticas" },
                   { value: "40%", label: "economia em viagens" },
                 ].map((s) => (
                   <div key={s.label}>
-                    <p className="text-2xl font-extrabold text-[#0b2a45]">{s.value}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{s.label}</p>
+                    <p className="text-2xl font-extrabold text-white">{s.value}</p>
+                    <p className="text-xs text-white/50 mt-0.5">{s.label}</p>
                   </div>
                 ))}
               </div>
