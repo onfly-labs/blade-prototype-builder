@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const tabs = ["Próximas viagens", "Minhas viagens", "Histórico"];
@@ -30,8 +30,17 @@ const reservations = [
     origin: "São Paulo (GRU)",
     destination: "Brasília (BSB)",
     date: "20/04/2026",
-    status: "Confirmada",
+    status: "Expirada",
     traveler: "Maria Santos",
+  },
+  {
+    id: 4,
+    type: "Hotel",
+    origin: "Brasília",
+    destination: "Hotel Nacional",
+    date: "01/04/2026 – 03/04/2026",
+    status: "Expirada",
+    traveler: "João Pereira",
   },
 ];
 
@@ -85,6 +94,7 @@ const Reservas = () => {
                 <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Data</th>
                 <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Viajante</th>
                 <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
+                <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -112,11 +122,21 @@ const Reservas = () => {
                       className={`text-xs font-medium px-2.5 py-1 rounded-full ${
                         r.status === "Confirmada"
                           ? "bg-green-100 text-green-700"
+                          : r.status === "Expirada"
+                          ? "bg-red-100 text-red-700"
                           : "bg-yellow-100 text-yellow-700"
                       }`}
                     >
                       {r.status}
                     </span>
+                  </td>
+                  <td className="px-5 py-4">
+                    {r.status === "Expirada" && (
+                      <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg">
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        Recotar
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
