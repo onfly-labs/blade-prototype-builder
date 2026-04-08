@@ -317,7 +317,15 @@ const Relatorios = () => {
     return true;
   });
 
-  const detailUrl = (slug: string) => `https://app.example.com/approvals/${slug}`;
+  const typeSlugMap: Record<string, string> = {
+    FlyOrder: "fly",
+    HotelOrder: "hotel",
+    CarOrder: "car",
+    BusOrder: "bus",
+  };
+
+  const detailUrl = (type: string, id: number) =>
+    `https://app.onfly.com/travel/#/travel/reserve-details/${typeSlugMap[type] || "fly"}/${id}`;
 
   return (
     <Layout>
@@ -458,7 +466,7 @@ const Relatorios = () => {
                       </td>
                       <td className="px-4 py-3 text-center">
                         <a
-                          href={detailUrl(item.approvalSlug)}
+                          href={detailUrl(item.type, item.id)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-accent transition-colors"

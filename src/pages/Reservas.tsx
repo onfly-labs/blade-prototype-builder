@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -11,12 +11,13 @@ const tabs = ["Próximas viagens", "Minhas viagens", "Histórico"];
 
 type Reservation = {
   id: string;
+  numericId: number;
   type: string;
   icon: typeof Plane;
   origin: string;
   destination: string;
   date: string;
-  tripDate: string; // ISO date of the trip (first date)
+  tripDate: string;
   status: string;
   traveler: string;
   costCenter: string;
@@ -25,9 +26,20 @@ type Reservation = {
   myTrip: boolean;
 };
 
+const typeSlugMap: Record<string, string> = {
+  "Aéreo": "fly",
+  "Hotel": "hotel",
+  "Carro": "car",
+  "Ônibus": "bus",
+};
+
+const getDetailUrl = (type: string, numericId: number) =>
+  `https://app.onfly.com/travel/#/travel/reserve-details/${typeSlugMap[type] || "fly"}/${numericId}`;
+
 const reservations: Reservation[] = [
   {
     id: "#03Z925",
+    numericId: 6690003,
     type: "Aéreo",
     icon: Plane,
     origin: "São Paulo (CGH)",
@@ -43,6 +55,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#07K412",
+    numericId: 6690079,
     type: "Hotel",
     icon: MapPin,
     origin: "Rio de Janeiro",
@@ -58,6 +71,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#12B738",
+    numericId: 6690149,
     type: "Aéreo",
     icon: Plane,
     origin: "São Paulo (GRU)",
@@ -73,6 +87,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#18F291",
+    numericId: 6691062,
     type: "Hotel",
     icon: MapPin,
     origin: "Brasília",
@@ -88,6 +103,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#21A100",
+    numericId: 6688501,
     type: "Aéreo",
     icon: Plane,
     origin: "Recife (REC)",
@@ -103,6 +119,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#22C301",
+    numericId: 6688710,
     type: "Carro",
     icon: Car,
     origin: "São Paulo",
@@ -118,6 +135,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#23D502",
+    numericId: 6688811,
     type: "Aéreo",
     icon: Plane,
     origin: "Curitiba (CWB)",
@@ -133,6 +151,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#25G890",
+    numericId: 6689100,
     type: "Ônibus",
     icon: Bus,
     origin: "Salvador",
@@ -399,11 +418,14 @@ const Reservas = () => {
                 {paginatedReservations.map((r) => {
                   const isUrgent = r.status === "Pendente" && r.hoursLeft <= 12;
                   const Icon = r.icon;
+                  const detailHref = getDetailUrl(r.type, r.numericId);
 
                   return (
                     <tr key={r.id} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
                       <td className="px-5 py-4">
-                        <span className="text-sm font-mono font-semibold text-foreground">{r.id}</span>
+                        <a href={detailHref} target="_blank" rel="noopener noreferrer" className="text-sm font-mono font-semibold text-primary hover:underline">
+                          {r.id}
+                        </a>
                       </td>
                       <td className="px-5 py-4">
                         <Tooltip>
