@@ -317,7 +317,15 @@ const Relatorios = () => {
     return true;
   });
 
-  const detailUrl = (slug: string) => `https://app.example.com/approvals/${slug}`;
+  const typeSlugMap: Record<string, string> = {
+    FlyOrder: "fly",
+    HotelOrder: "hotel",
+    CarOrder: "car",
+    BusOrder: "bus",
+  };
+
+  const detailUrl = (type: string, id: number) =>
+    `https://app.onfly.com/travel/#/travel/reserve-details/${typeSlugMap[type] || "fly"}/${id}`;
 
   return (
     <Layout>
