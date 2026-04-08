@@ -347,10 +347,6 @@ const Reservas = () => {
               <h1 className="text-xl font-bold text-foreground">Reservas</h1>
               <p className="text-sm text-muted-foreground">Acompanhe e controle seus próximos compromissos</p>
             </div>
-            <Button variant="outline" size="sm" className="ml-auto gap-2" onClick={fetchReservations} disabled={loading}>
-              <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-              Atualizar
-            </Button>
           </div>
 
           {/* Tabs + Filter */}
