@@ -8,8 +8,14 @@ import {
 } from "lucide-react";
 
 const LandingPage = () => {
-  const { user, signInWithGoogle } = useAuth();
+  const { user, loading, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/reservas");
+    }
+  }, [user, loading, navigate]);
 
   const handleExperimentar = () => {
     if (user) {
