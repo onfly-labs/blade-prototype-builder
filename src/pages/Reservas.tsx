@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const tabs = ["Próximas viagens", "Minhas viagens", "Histórico"];
