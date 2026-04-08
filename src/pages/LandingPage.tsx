@@ -97,7 +97,7 @@ const LandingPage = () => {
               </div>
 
               {/* Mini stats */}
-              <div className="flex gap-8 mt-10 pt-8 border-t border-gray-200/60">
+              <div className="flex gap-8 mt-10 pt-8 border-t border-white/20">
                 {[
                   { value: "3min", label: "tempo médio de reserva" },
                   { value: "85%", label: "aprovações automáticas" },
