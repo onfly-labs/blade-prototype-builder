@@ -151,7 +151,7 @@ const Reservas = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(50);
-  const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string } | null>(null);
+  const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string; reason?: string } | null>(null);
   const [analyzingIds, setAnalyzingIds] = useState<Record<string, boolean>>({});
   const [analyzingAll, setAnalyzingAll] = useState(false);
 
