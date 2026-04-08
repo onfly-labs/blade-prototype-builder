@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import AiAnalysisModal from "@/components/AiAnalysisModal";
 import Layout from "@/components/layout/Layout";
 import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot, Loader2 } from "lucide-react";
@@ -129,6 +130,7 @@ const statusColor = (status: string) => {
 };
 
 const Reservas = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState(0);
   const [notified, setNotified] = useState<Record<string, boolean>>({});
   const [showFilters, setShowFilters] = useState(false);
@@ -209,7 +211,8 @@ const Reservas = () => {
     if (activeTab === 0) {
       data = data.filter((r) => new Date(r.tripDate) >= today && (r.status === "Aprovada" || r.status === "Pendente" || r.status === "Expirada"));
     } else if (activeTab === 1) {
-      data = data.filter((r) => r.myTrip);
+      const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || "";
+      data = data.filter((r) => userName && r.traveler.toLowerCase().includes(userName.toLowerCase()));
     } else if (activeTab === 2) {
       data = data.filter((r) => new Date(r.tripDate) < today);
     }
