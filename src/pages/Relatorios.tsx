@@ -5,11 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Status: 1=Aprovada, 2=Reprovada, 3=Aprovação Automática, 4=Pendente, 5=Expirada
+// Status: 1=Aprovada, 2=Reprovada, 3=Aprovada (automática), 4=Pendente, 5=Expirada
 const statusMap: Record<number, { label: string; color: string }> = {
   1: { label: "Aprovada", color: "bg-green-100 text-green-700 border-green-200" },
   2: { label: "Reprovada", color: "bg-red-100 text-red-700 border-red-200" },
-  3: { label: "Aprovação Automática", color: "bg-blue-100 text-blue-700 border-blue-200" },
+  3: { label: "Aprovada", color: "bg-green-100 text-green-700 border-green-200" },
   4: { label: "Pendente", color: "bg-yellow-100 text-yellow-700 border-yellow-200" },
   5: { label: "Expirada", color: "bg-gray-100 text-gray-600 border-gray-200" },
 };
@@ -312,7 +312,8 @@ const Relatorios = () => {
 
   // Filtered list
   const filtered = mockApprovals.filter((a) => {
-    if (filterStatus !== "all" && a.status !== Number(filterStatus)) return false;
+    if (filterStatus === "approved" && a.status !== 1 && a.status !== 3) return false;
+    if (filterStatus !== "all" && filterStatus !== "approved" && a.status !== Number(filterStatus)) return false;
     if (filterType !== "all" && a.type !== filterType) return false;
     return true;
   });
@@ -392,9 +393,8 @@ const Relatorios = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todos os status</SelectItem>
-                  <SelectItem value="1">Aprovada</SelectItem>
+                  <SelectItem value="approved">Aprovada</SelectItem>
                   <SelectItem value="2">Reprovada</SelectItem>
-                  <SelectItem value="3">Auto. Aprovada</SelectItem>
                   <SelectItem value="4">Pendente</SelectItem>
                   <SelectItem value="5">Expirada</SelectItem>
                 </SelectContent>
