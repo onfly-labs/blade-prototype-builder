@@ -25,6 +25,7 @@ type Reservation = {
   approvalDeadline: string | null;
   hoursLeft: number;
   myTrip: boolean;
+  aiDecision?: "approved" | "reproved" | null;
 };
 
 const typeSlugMap: Record<string, string> = {
