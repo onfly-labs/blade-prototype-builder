@@ -39,6 +39,7 @@ const getDetailUrl = (type: string, numericId: number) =>
 const reservations: Reservation[] = [
   {
     id: "#03Z925",
+    numericId: 6690003,
     type: "Aéreo",
     icon: Plane,
     origin: "São Paulo (CGH)",
@@ -54,6 +55,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#07K412",
+    numericId: 6690079,
     type: "Hotel",
     icon: MapPin,
     origin: "Rio de Janeiro",
@@ -69,6 +71,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#12B738",
+    numericId: 6690149,
     type: "Aéreo",
     icon: Plane,
     origin: "São Paulo (GRU)",
@@ -84,6 +87,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#18F291",
+    numericId: 6691062,
     type: "Hotel",
     icon: MapPin,
     origin: "Brasília",
@@ -99,6 +103,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#21A100",
+    numericId: 6688501,
     type: "Aéreo",
     icon: Plane,
     origin: "Recife (REC)",
@@ -114,6 +119,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#22C301",
+    numericId: 6688710,
     type: "Carro",
     icon: Car,
     origin: "São Paulo",
@@ -129,6 +135,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#23D502",
+    numericId: 6688811,
     type: "Aéreo",
     icon: Plane,
     origin: "Curitiba (CWB)",
@@ -144,6 +151,7 @@ const reservations: Reservation[] = [
   },
   {
     id: "#25G890",
+    numericId: 6689100,
     type: "Ônibus",
     icon: Bus,
     origin: "Salvador",
