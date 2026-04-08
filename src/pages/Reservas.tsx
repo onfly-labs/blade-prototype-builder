@@ -16,6 +16,7 @@ type Reservation = {
   origin: string;
   destination: string;
   date: string;
+  tripDate: string; // ISO date of the trip (first date)
   status: string;
   traveler: string;
   costCenter: string;
