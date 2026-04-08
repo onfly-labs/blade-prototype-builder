@@ -1,5 +1,5 @@
 import Layout from "@/components/layout/Layout";
-import { FileText, CheckCircle, Zap, XCircle, AlertTriangle, Clock, Plane, Hotel, Car, Bus, ExternalLink } from "lucide-react";
+import { FileText, CheckCircle, Zap, XCircle, AlertTriangle, Clock, Plane, Hotel, Car, Bus, ExternalLink, Bot } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
