@@ -90,13 +90,6 @@ const LandingPage = () => {
                   Experimentar grátis
                   <ArrowRight className="w-4 h-4" />
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="text-gray-500 hover:text-[#0b2a45] text-base px-8 py-6 rounded-full font-medium"
-                >
-                  Ver demonstração
-                </Button>
               </div>
 
               {/* Mini stats */}
