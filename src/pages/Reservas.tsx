@@ -16,6 +16,7 @@ type Reservation = {
   origin: string;
   destination: string;
   date: string;
+  tripDate: string; // ISO date of the trip (first date)
   status: string;
   traveler: string;
   costCenter: string;
@@ -32,6 +33,7 @@ const reservations: Reservation[] = [
     origin: "São Paulo (CGH)",
     destination: "Rio de Janeiro (SDU)",
     date: "17/04/2026",
+    tripDate: "2026-04-17",
     status: "Confirmada",
     traveler: "Ivan Silva",
     costCenter: "CC-001 Marketing",
@@ -46,6 +48,7 @@ const reservations: Reservation[] = [
     origin: "Rio de Janeiro",
     destination: "Hotel Copacabana Palace",
     date: "17/04/2026 – 20/04/2026",
+    tripDate: "2026-04-17",
     status: "Pendente",
     traveler: "Ivan Silva",
     costCenter: "CC-001 Marketing",
@@ -60,6 +63,7 @@ const reservations: Reservation[] = [
     origin: "São Paulo (GRU)",
     destination: "Brasília (BSB)",
     date: "20/04/2026",
+    tripDate: "2026-04-20",
     status: "Pendente",
     traveler: "Maria Santos",
     costCenter: "CC-003 Vendas",
@@ -73,7 +77,8 @@ const reservations: Reservation[] = [
     icon: MapPin,
     origin: "Brasília",
     destination: "Hotel Nacional",
-    date: "01/04/2026 – 03/04/2026",
+    date: "15/04/2026 – 17/04/2026",
+    tripDate: "2026-04-15",
     status: "Expirada",
     traveler: "João Pereira",
     costCenter: "CC-002 TI",
@@ -88,6 +93,7 @@ const reservations: Reservation[] = [
     origin: "Recife (REC)",
     destination: "São Paulo (GRU)",
     date: "05/03/2026",
+    tripDate: "2026-03-05",
     status: "Aprovada",
     traveler: "Ivan Silva",
     costCenter: "CC-001 Marketing",
@@ -102,6 +108,7 @@ const reservations: Reservation[] = [
     origin: "São Paulo",
     destination: "Hotel Fasano",
     date: "05/03/2026 – 07/03/2026",
+    tripDate: "2026-03-05",
     status: "Aprovada",
     traveler: "Maria Santos",
     costCenter: "CC-003 Vendas",
@@ -116,9 +123,25 @@ const reservations: Reservation[] = [
     origin: "Curitiba (CWB)",
     destination: "Porto Alegre (POA)",
     date: "10/02/2026",
+    tripDate: "2026-02-10",
     status: "Aprovada",
     traveler: "João Pereira",
     costCenter: "CC-002 TI",
+    approvalDeadline: null,
+    hoursLeft: 0,
+    myTrip: false,
+  },
+  {
+    id: "#25G890",
+    type: "Aéreo",
+    icon: Plane,
+    origin: "Salvador (SSA)",
+    destination: "São Paulo (GRU)",
+    date: "01/03/2026",
+    tripDate: "2026-03-01",
+    status: "Expirada",
+    traveler: "Ana Costa",
+    costCenter: "CC-001 Marketing",
     approvalDeadline: null,
     hoursLeft: 0,
     myTrip: false,
@@ -417,7 +440,7 @@ const Reservas = () => {
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
-                          {r.status === "Expirada" && (
+                          {r.status === "Expirada" && new Date(r.tripDate) >= new Date(new Date().toISOString().split("T")[0]) && (
                             <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg">
                               <RefreshCw className="w-3.5 h-3.5" />
                               Recotar
