@@ -473,30 +473,11 @@ const Reservas = () => {
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
-                          {r.status === "Expirada" && new Date(r.tripDate) >= new Date(new Date().toISOString().split("T")[0]) && (
-                            <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg">
-                              <RefreshCw className="w-3.5 h-3.5" />
-                              Recotar
+                          {r.status === "Pendente" && (
+                            <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg text-green-700 border-green-300 hover:bg-green-50">
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              Aprovar
                             </Button>
-                          )}
-                          {isUrgent && (
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant={notified[r.id] ? "secondary" : "destructive"}
-                                  size="sm"
-                                  className="gap-1.5 text-xs rounded-lg"
-                                  onClick={() => handleNotify(r.id)}
-                                  disabled={notified[r.id]}
-                                >
-                                  <Bell className="w-3.5 h-3.5" />
-                                  {notified[r.id] ? "Notificado" : "Lembrar"}
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{notified[r.id] ? "Aprovador já foi notificado" : "Enviar lembrete ao aprovador"}</p>
-                              </TooltipContent>
-                            </Tooltip>
                           )}
                         </div>
                       </td>
