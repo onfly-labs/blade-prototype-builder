@@ -481,15 +481,15 @@ const Reservas = () => {
                       </td>
                       <td className="px-5 py-4">
                         {r.aiDecision === "approved" ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                          <button onClick={() => setAiModal({ open: true, decision: "approved", id: r.id })} className="inline-flex items-center gap-1 text-xs font-medium text-green-700 hover:underline cursor-pointer">
                             <Bot className="w-3.5 h-3.5" />
                             Aprovado pela IA
-                          </span>
+                          </button>
                         ) : r.aiDecision === "reproved" ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-destructive">
+                          <button onClick={() => setAiModal({ open: true, decision: "reproved", id: r.id })} className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline cursor-pointer">
                             <Bot className="w-3.5 h-3.5" />
                             Reprovado pela IA
-                          </span>
+                          </button>
                         ) : (
                           <span className="text-xs text-muted-foreground">—</span>
                         )}
