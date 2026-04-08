@@ -451,9 +451,19 @@ const Relatorios = () => {
                       <td className="px-4 py-3 text-xs text-muted-foreground max-w-[180px] truncate">{item.costCenter.data.name}</td>
                       <td className="px-4 py-3 text-sm text-foreground text-right font-medium">{formatCurrency(item.totalAmount)}</td>
                       <td className="px-4 py-3">
-                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent text-accent-foreground whitespace-nowrap">
-                          {getFlowName(item)}
-                        </span>
+                        {item.status === 3 ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                            <Bot className="w-3.5 h-3.5" />
+                            Aprovado pela IA
+                          </span>
+                        ) : item.status === 2 ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-destructive">
+                            <Bot className="w-3.5 h-3.5" />
+                            Reprovado pela IA
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">—</span>
+                        )}
                       </td>
                       <td className="px-4 py-3">
                         <Badge variant="outline" className={`text-xs ${st.color} border whitespace-nowrap`}>
