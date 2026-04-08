@@ -70,7 +70,7 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - copy */}
             <div className="py-12 lg:py-20">
-              <div className="inline-flex items-center gap-2 bg-[#00a0e4]/10 text-[#00a0e4] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
+              <div className="inline-flex items-center gap-2 bg-white/15 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
                 <Zap className="w-3.5 h-3.5" />
                 Gestão inteligente de viagens
               </div>
