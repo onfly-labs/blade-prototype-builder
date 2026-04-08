@@ -3,9 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
-  Plane, Hotel, Car, Bus, Zap, Shield, BarChart3,
-  ArrowRight, Globe, Clock, Users, CheckCircle, ChevronRight,
-  Timer, TrendingUp, BellRing, GitBranch
+  Plane,
+  Hotel,
+  Car,
+  Bus,
+  Zap,
+  Shield,
+  BarChart3,
+  ArrowRight,
+  Globe,
+  Clock,
+  Users,
+  CheckCircle,
+  ChevronRight,
+  Timer,
+  TrendingUp,
+  BellRing,
+  GitBranch,
 } from "lucide-react";
 import reservasScreenshot from "@/assets/reservas-screenshot.png";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -41,9 +55,15 @@ const LandingPage = () => {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
-            <a href="#produto" className="hover:text-[#0b2a45] transition-colors">Produto</a>
-            <a href="#automacao" className="hover:text-[#0b2a45] transition-colors">Automação</a>
-            <a href="#metricas" className="hover:text-[#0b2a45] transition-colors">Resultados</a>
+            <a href="#produto" className="hover:text-[#0b2a45] transition-colors">
+              Produto
+            </a>
+            <a href="#automacao" className="hover:text-[#0b2a45] transition-colors">
+              Automação
+            </a>
+            <a href="#metricas" className="hover:text-[#0b2a45] transition-colors">
+              Resultados
+            </a>
           </div>
           <Button
             onClick={handleExperimentar}
@@ -56,13 +76,15 @@ const LandingPage = () => {
 
       {/* Hero */}
       <section className="relative pt-28 pb-0 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b2a45]/85 via-[#0b2a45]/70 to-white" />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b2a45]/60 via-[#0b2a45]/40 to-white" />
         {/* Large white airplane SVG */}
-        <svg className="absolute right-[-5%] top-[10%] w-[600px] h-[600px] opacity-[0.07]" viewBox="0 0 512 512" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          className="absolute right-[-5%] top-[10%] w-[600px] h-[600px] opacity-[0.07]"
+          viewBox="0 0 512 512"
+          fill="white"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path d="M497.7 75.3L437 14.7C430.7 8.4 422.2 4.8 413.3 4.8s-17.3 3.6-23.7 9.9L295 109.3 53.3 25.7c-7-2.4-14.6-1.1-20.3 3.5L9.4 49.9c-7.2 5.9-9.9 15.5-6.8 24.3l85.7 240.6L30.1 373c-16.3 16.3-16.3 42.7 0 59l50 50c16.3 16.3 42.7 16.3 59 0l58.2-58.2L438 510.6c8.8 3.1 18.4 .4 24.3-6.8l20.7-23.6c4.6-5.7 5.9-13.3 3.5-20.3l-83.6-241.7 94.7-94.7c13.1-13 13.1-34.3.1-47.4v-.4zM147.3 440.1l-7.4 7.4c-2.4 2.4-6.3 2.4-8.7 0l-67.2-67.2c-2.4-2.4-2.4-6.3 0-8.7l7.4-7.4 75.9 75.9z" />
         </svg>
 
@@ -77,8 +99,7 @@ const LandingPage = () => {
               <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight text-white mb-5">
                 Reservas rápidas.
                 <br />
-                Aprovações{" "}
-                <span className="text-[#00a0e4]">automáticas.</span>
+                Aprovações <span className="text-[#00a0e4]">automáticas.</span>
                 <br />
                 Controle total.
               </h1>
@@ -104,8 +125,8 @@ const LandingPage = () => {
                   { value: "40%", label: "economia em viagens" },
                 ].map((s) => (
                   <div key={s.label}>
-                    <p className="text-2xl font-extrabold text-[#00a0e4]">{s.value}</p>
-                    <p className="text-xs text-white/90 mt-0.5 font-medium">{s.label}</p>
+                    <p className="text-2xl font-extrabold text-white">{s.value}</p>
+                    <p className="text-xs font-extrabold text-white/50 mt-0.5">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -153,13 +174,38 @@ const LandingPage = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: Plane, label: "Aéreo", desc: "Passagens com as melhores tarifas negociadas", color: "from-sky-500 to-blue-600" },
-              { icon: Hotel, label: "Hotéis", desc: "200 mil+ opções em todo o Brasil e exterior", color: "from-violet-500 to-purple-600" },
-              { icon: Car, label: "Carros", desc: "Locação integrada com frotas nacionais", color: "from-amber-500 to-orange-600" },
-              { icon: Bus, label: "Rodoviário", desc: "Cobertura completa de rotas nacionais", color: "from-emerald-500 to-teal-600" },
+              {
+                icon: Plane,
+                label: "Aéreo",
+                desc: "Passagens com as melhores tarifas negociadas",
+                color: "from-sky-500 to-blue-600",
+              },
+              {
+                icon: Hotel,
+                label: "Hotéis",
+                desc: "200 mil+ opções em todo o Brasil e exterior",
+                color: "from-violet-500 to-purple-600",
+              },
+              {
+                icon: Car,
+                label: "Carros",
+                desc: "Locação integrada com frotas nacionais",
+                color: "from-amber-500 to-orange-600",
+              },
+              {
+                icon: Bus,
+                label: "Rodoviário",
+                desc: "Cobertura completa de rotas nacionais",
+                color: "from-emerald-500 to-teal-600",
+              },
             ].map((item) => (
-              <div key={item.label} className="group bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 shadow-lg shadow-gray-200/50`}>
+              <div
+                key={item.label}
+                className="group bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default"
+              >
+                <div
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 shadow-lg shadow-gray-200/50`}
+                >
                   <item.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-[#0b2a45] text-lg mb-1">{item.label}</h3>
@@ -180,7 +226,8 @@ const LandingPage = () => {
                 Aprovações que funcionam <span className="text-[#00a0e4]">sozinhas</span>
               </h2>
               <p className="text-gray-500 mb-10 leading-relaxed">
-                Configure regras de política de viagem e deixe o sistema trabalhar. Reservas dentro da política são aprovadas instantaneamente — sem gargalos, sem atrasos.
+                Configure regras de política de viagem e deixe o sistema trabalhar. Reservas dentro da política são
+                aprovadas instantaneamente — sem gargalos, sem atrasos.
               </p>
 
               <div className="space-y-6">
@@ -224,15 +271,27 @@ const LandingPage = () => {
               <div className="space-y-4">
                 {[
                   { step: "Solicitação", detail: "Colaborador reserva voo GRU → BSB", status: "done", time: "11:00" },
-                  { step: "Verificação de política", detail: "Valor R$ 890 dentro do limite de R$ 1.200", status: "done", time: "11:00" },
-                  { step: "Aprovação automática", detail: "Reserva aprovada pelo sistema", status: "auto", time: "11:00" },
+                  {
+                    step: "Verificação de política",
+                    detail: "Valor R$ 890 dentro do limite de R$ 1.200",
+                    status: "done",
+                    time: "11:00",
+                  },
+                  {
+                    step: "Aprovação automática",
+                    detail: "Reserva aprovada pelo sistema",
+                    status: "auto",
+                    time: "11:00",
+                  },
                   { step: "Emissão", detail: "Bilhete emitido e enviado ao viajante", status: "done", time: "11:01" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-4">
                     <div className="flex flex-col items-center">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${
-                        item.status === "auto" ? "bg-[#00a0e4]" : "bg-[#0b2a45]"
-                      }`}>
+                      <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${
+                          item.status === "auto" ? "bg-[#00a0e4]" : "bg-[#0b2a45]"
+                        }`}
+                      >
                         {item.status === "auto" ? <Zap className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
                       </div>
                       {i < 3 && <div className="w-px h-8 bg-gray-200 mt-1" />}
@@ -252,7 +311,9 @@ const LandingPage = () => {
                   <Timer className="w-4 h-4 text-[#00a0e4]" />
                   <span className="font-bold text-[#0b2a45]">Tempo total: 1 minuto</span>
                 </div>
-                <span className="text-xs bg-green-50 text-green-600 font-semibold px-3 py-1 rounded-full">Sem intervenção manual</span>
+                <span className="text-xs bg-green-50 text-green-600 font-semibold px-3 py-1 rounded-full">
+                  Sem intervenção manual
+                </span>
               </div>
             </div>
           </div>
@@ -274,12 +335,25 @@ const LandingPage = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: TrendingUp, value: "40%", label: "redução de custos com viagens", desc: "Comparado à gestão manual" },
+              {
+                icon: TrendingUp,
+                value: "40%",
+                label: "redução de custos com viagens",
+                desc: "Comparado à gestão manual",
+              },
               { icon: Timer, value: "95%", label: "mais rápido nas aprovações", desc: "De 48h para minutos" },
-              { icon: BarChart3, value: "3.2k+", label: "empresas confiam na Onfly", desc: "De startups a enterprises" },
+              {
+                icon: BarChart3,
+                value: "3.2k+",
+                label: "empresas confiam na Onfly",
+                desc: "De startups a enterprises",
+              },
               { icon: Users, value: "100%", label: "visibilidade dos gastos", desc: "Relatórios em tempo real" },
             ].map((item) => (
-              <div key={item.label} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+              <div
+                key={item.label}
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors"
+              >
                 <item.icon className="w-6 h-6 text-[#00a0e4] mb-4" />
                 <p className="text-4xl font-extrabold text-white mb-1">{item.value}</p>
                 <p className="text-sm font-semibold text-gray-300 mb-1">{item.label}</p>
@@ -315,7 +389,9 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Globe className="w-5 h-5 text-[#00a0e4]" />
-            <span className="font-bold text-[#0b2a45]">on<span className="text-[#00a0e4]">fly</span></span>
+            <span className="font-bold text-[#0b2a45]">
+              on<span className="text-[#00a0e4]">fly</span>
+            </span>
           </div>
           <p className="text-xs text-gray-400">© 2026 Onfly. Todos os direitos reservados.</p>
         </div>
