@@ -1,30 +1,52 @@
+import { supabase } from "@/integrations/supabase/client";
+
 export interface Rule {
-  id: number;
+  id: string;
   name: string;
   description: string;
   active: boolean;
 }
 
-const STORAGE_KEY = "onfly_approval_rules";
-
-const defaultRules: Rule[] = [
-  { id: 1, name: "Limite de valor diária hotel", description: "Limitar valor de diária de hotel a R$500", active: true },
-  { id: 2, name: "Antecedência mínima aéreo", description: "Passagens aéreas devem ser compradas com 7 dias de antecedência", active: true },
-  { id: 3, name: "Aprovação para internacional", description: "Viagens internacionais precisam de aprovação do gestor", active: false },
-];
-
-export const getRules = (): Rule[] => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
-  return defaultRules;
+export const fetchRules = async (): Promise<Rule[]> => {
+  const { data, error } = await supabase
+    .from("approval_rules")
+    .select("id, name, description, active")
+    .order("created_at", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
 };
 
-export const saveRules = (rules: Rule[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(rules));
+export const createRule = async (name: string, description: string): Promise<Rule> => {
+  const { data, error } = await supabase
+    .from("approval_rules")
+    .insert({ name, description, active: true })
+    .select("id, name, description, active")
+    .single();
+  if (error) throw error;
+  return data;
 };
 
-export const getActiveRules = (): Rule[] => {
-  return getRules().filter((r) => r.active);
+export const updateRule = async (id: string, updates: Partial<Pick<Rule, "name" | "description" | "active">>): Promise<void> => {
+  const { error } = await supabase
+    .from("approval_rules")
+    .update(updates)
+    .eq("id", id);
+  if (error) throw error;
+};
+
+export const deleteRule = async (id: string): Promise<void> => {
+  const { error } = await supabase
+    .from("approval_rules")
+    .delete()
+    .eq("id", id);
+  if (error) throw error;
+};
+
+export const getActiveRules = async (): Promise<Rule[]> => {
+  const { data, error } = await supabase
+    .from("approval_rules")
+    .select("id, name, description, active")
+    .eq("active", true);
+  if (error) throw error;
+  return data ?? [];
 };
