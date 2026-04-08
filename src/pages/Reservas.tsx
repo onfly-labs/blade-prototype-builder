@@ -231,7 +231,7 @@ const Reservas = () => {
   }, [activeTab, filterId, filterType, filterStatus, filterTraveler, filterCostCenter, filterOrigin, filterDestination]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const perPage = 50;
+  const [perPage, setPerPage] = useState(50);
   const totalPages = Math.max(1, Math.ceil(filteredReservations.length / perPage));
   const paginatedReservations = filteredReservations.slice((currentPage - 1) * perPage, currentPage * perPage);
 
@@ -486,9 +486,20 @@ const Reservas = () => {
 
           {filteredReservations.length > 0 && (
             <div className="flex items-center justify-between mt-4 px-2">
-              <p className="text-sm text-muted-foreground">
-                Exibindo {((currentPage - 1) * perPage) + 1}–{Math.min(currentPage * perPage, filteredReservations.length)} de {filteredReservations.length} reservas
-              </p>
+              <div className="flex items-center gap-3">
+                <p className="text-sm text-muted-foreground">
+                  Exibindo {((currentPage - 1) * perPage) + 1}–{Math.min(currentPage * perPage, filteredReservations.length)} de {filteredReservations.length} reservas
+                </p>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm text-muted-foreground">|</span>
+                  <span className="text-sm text-muted-foreground">Por página:</span>
+                  {[10, 25, 50].map((n) => (
+                    <Button key={n} variant={perPage === n ? "default" : "outline"} size="sm" className="h-7 px-2 text-xs" onClick={() => { setPerPage(n); setCurrentPage(1); }}>
+                      {n}
+                    </Button>
+                  ))}
+                </div>
+              </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
                   <ChevronLeft className="w-4 h-4" />
