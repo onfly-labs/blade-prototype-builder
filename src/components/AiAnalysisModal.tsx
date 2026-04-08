@@ -6,6 +6,7 @@ type AiAnalysisModalProps = {
   onOpenChange: (open: boolean) => void;
   decision: "approved" | "reproved";
   reservationId?: string | number;
+  reason?: string;
 };
 
 const approvedAnalysis = {
@@ -39,9 +40,10 @@ const statusIcon = (status: string) => {
   }
 };
 
-export default function AiAnalysisModal({ open, onOpenChange, decision, reservationId }: AiAnalysisModalProps) {
+export default function AiAnalysisModal({ open, onOpenChange, decision, reservationId, reason }: AiAnalysisModalProps) {
   const analysis = decision === "approved" ? approvedAnalysis : reprovedAnalysis;
   const isApproved = decision === "approved";
+  const displaySummary = reason || analysis.summary;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -71,7 +73,7 @@ export default function AiAnalysisModal({ open, onOpenChange, decision, reservat
           </div>
 
           {/* Summary */}
-          <p className="text-sm text-muted-foreground leading-relaxed">{analysis.summary}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">{displaySummary}</p>
 
           {/* Criteria */}
           <div className="space-y-3">
