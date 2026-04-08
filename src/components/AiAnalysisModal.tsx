@@ -6,6 +6,7 @@ type AiAnalysisModalProps = {
   onOpenChange: (open: boolean) => void;
   decision: "approved" | "reproved";
   reservationId?: string | number;
+  reason?: string;
 };
 
 const approvedAnalysis = {
