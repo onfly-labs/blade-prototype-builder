@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2 } from "lucide-react";
+import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,7 @@ type Reservation = {
   approvalDeadline: string | null;
   hoursLeft: number;
   myTrip: boolean;
+  aiDecision?: "approved" | "reproved" | null;
 };
 
 const typeSlugMap: Record<string, string> = {
@@ -53,6 +54,7 @@ const reservations: Reservation[] = [
     approvalDeadline: "2026-04-10T14:00:00",
     hoursLeft: 48,
     myTrip: true,
+    aiDecision: "approved",
   },
   {
     id: "#07K412",
@@ -69,6 +71,7 @@ const reservations: Reservation[] = [
     approvalDeadline: "2026-04-09T08:00:00",
     hoursLeft: 10,
     myTrip: true,
+    aiDecision: "reproved",
   },
   {
     id: "#12B738",
@@ -85,6 +88,7 @@ const reservations: Reservation[] = [
     approvalDeadline: "2026-04-08T18:00:00",
     hoursLeft: 4,
     myTrip: false,
+    aiDecision: "approved",
   },
   {
     id: "#18F291",
@@ -117,6 +121,7 @@ const reservations: Reservation[] = [
     approvalDeadline: null,
     hoursLeft: 0,
     myTrip: true,
+    aiDecision: "approved",
   },
   {
     id: "#22C301",
@@ -411,8 +416,9 @@ const Reservas = () => {
                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Viajante</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Centro de Custos</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Aprovação</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Ações</th>
+                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
+                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">IA</th>
+                   <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -470,6 +476,21 @@ const Reservas = () => {
                         <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${statusColor(r.status)}`}>
                           {r.status}
                         </span>
+                      </td>
+                      <td className="px-5 py-4">
+                        {r.aiDecision === "approved" ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                            <Bot className="w-3.5 h-3.5" />
+                            Aprovado pela IA
+                          </span>
+                        ) : r.aiDecision === "reproved" ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-destructive">
+                            <Bot className="w-3.5 h-3.5" />
+                            Reprovado pela IA
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">—</span>
+                        )}
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
