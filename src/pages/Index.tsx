@@ -7,7 +7,7 @@ const searchTabs = [
   { id: "aereo", label: "Aéreo", icon: Plane },
   { id: "hotel", label: "Hotel", icon: Hotel },
   { id: "carro", label: "Carro", icon: Car },
-  { id: "concierge", label: "Concierge", icon: Concierge },
+  { id: "concierge", label: "Concierge", icon: ConciergeBell },
 ];
 
 const flightResults = [
