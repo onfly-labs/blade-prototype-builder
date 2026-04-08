@@ -341,15 +341,15 @@ const Relatorios = () => {
           </div>
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
-          {resumoAprovacao.map((item) => (
-            <div key={item.label} className="bg-card border border-border rounded-2xl p-4 text-center">
-              <item.icon className={`w-5 h-5 mx-auto mb-2 ${item.cor}`} />
-              <p className="text-2xl font-bold text-foreground">{item.valor}</p>
-              <p className="text-xs text-muted-foreground mt-1">{item.label}</p>
-            </div>
-          ))}
+        {/* Informativo de Pendentes */}
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 mb-8 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+            <Clock className="w-6 h-6 text-yellow-600" />
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-foreground">{pendentes} reserva{pendentes !== 1 ? 's' : ''} pendente{pendentes !== 1 ? 's' : ''} de aprovação</p>
+            <p className="text-sm text-muted-foreground">Existem solicitações aguardando análise no fluxo de aprovação</p>
+          </div>
         </div>
 
         {/* Aprovações por Fluxo */}
