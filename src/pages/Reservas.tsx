@@ -464,6 +464,7 @@ const Reservas = () => {
                 </Button>
               </PopoverContent>
             </Popover>
+            </div>
           </div>
 
           {/* Table */}
