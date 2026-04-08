@@ -104,8 +104,8 @@ const LandingPage = () => {
                   { value: "40%", label: "economia em viagens" },
                 ].map((s) => (
                   <div key={s.label}>
-                    <p className="text-2xl font-extrabold text-[#0b2a45]">{s.value}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{s.label}</p>
+                    <p className="text-2xl font-extrabold text-white">{s.value}</p>
+                    <p className="text-xs text-white/50 mt-0.5">{s.label}</p>
                   </div>
                 ))}
               </div>
