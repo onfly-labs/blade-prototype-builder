@@ -572,6 +572,20 @@ const Reservas = () => {
                                   <XCircle className="w-3.5 h-3.5" />
                                   Reprovar
                                 </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="gap-1.5 text-xs rounded-lg text-primary border-primary/30 hover:bg-primary/5"
+                                  disabled={!!analyzingIds[r.id]}
+                                  onClick={() => handleAnalyzeWithAI(r)}
+                                >
+                                  {analyzingIds[r.id] ? (
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                  ) : (
+                                    <Bot className="w-3.5 h-3.5" />
+                                  )}
+                                  {analyzingIds[r.id] ? "Analisando..." : "Analisar IA"}
+                                </Button>
                               </>
                             )}
                           </div>
