@@ -440,7 +440,7 @@ const Reservas = () => {
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
-                          {r.status === "Expirada" && (
+                          {r.status === "Expirada" && new Date(r.tripDate) >= new Date(new Date().toISOString().split("T")[0]) && (
                             <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg">
                               <RefreshCw className="w-3.5 h-3.5" />
                               Recotar
