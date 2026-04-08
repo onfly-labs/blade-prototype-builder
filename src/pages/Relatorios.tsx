@@ -466,7 +466,7 @@ const Relatorios = () => {
                       </td>
                       <td className="px-4 py-3 text-center">
                         <a
-                          href={detailUrl(item.approvalSlug)}
+                          href={detailUrl(item.type, item.id)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-accent transition-colors"
