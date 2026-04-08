@@ -73,7 +73,7 @@ export default function AiAnalysisModal({ open, onOpenChange, decision, reservat
           </div>
 
           {/* Summary */}
-          <p className="text-sm text-muted-foreground leading-relaxed">{analysis.summary}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">{displaySummary}</p>
 
           {/* Criteria */}
           <div className="space-y-3">
