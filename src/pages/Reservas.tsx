@@ -211,7 +211,8 @@ const Reservas = () => {
     if (activeTab === 0) {
       data = data.filter((r) => new Date(r.tripDate) >= today && (r.status === "Aprovada" || r.status === "Pendente" || r.status === "Expirada"));
     } else if (activeTab === 1) {
-      data = data.filter((r) => r.myTrip);
+      const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || "";
+      data = data.filter((r) => userName && r.traveler.toLowerCase().includes(userName.toLowerCase()));
     } else if (activeTab === 2) {
       data = data.filter((r) => new Date(r.tripDate) < today);
     }
