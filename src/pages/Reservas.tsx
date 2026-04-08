@@ -103,10 +103,10 @@ const reservations: Reservation[] = [
   },
   {
     id: "#22C301",
-    type: "Hotel",
-    icon: MapPin,
+    type: "Carro",
+    icon: Car,
     origin: "São Paulo",
-    destination: "Hotel Fasano",
+    destination: "Campinas",
     date: "05/03/2026 – 07/03/2026",
     tripDate: "2026-03-05",
     status: "Aprovada",
