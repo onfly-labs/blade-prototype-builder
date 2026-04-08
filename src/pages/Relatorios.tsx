@@ -3,6 +3,7 @@ import { FileText, CheckCircle, Zap, XCircle, AlertTriangle, Clock, Plane, Hotel
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import AiAnalysisModal from "@/components/AiAnalysisModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Status: 1=Aprovada, 2=Reprovada, 3=Aprovada (automática), 4=Pendente, 5=Expirada
@@ -278,6 +279,7 @@ const getFlowName = (item: typeof mockApprovals[0]) => {
 const Relatorios = () => {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
+  const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: number } | null>(null);
 
   // Compute summaries
   const total = mockApprovals.length;
@@ -452,15 +454,15 @@ const Relatorios = () => {
                       <td className="px-4 py-3 text-sm text-foreground text-right font-medium">{formatCurrency(item.totalAmount)}</td>
                       <td className="px-4 py-3">
                         {item.status === 3 ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                          <button onClick={() => setAiModal({ open: true, decision: "approved", id: item.id })} className="inline-flex items-center gap-1 text-xs font-medium text-green-700 hover:underline cursor-pointer">
                             <Bot className="w-3.5 h-3.5" />
                             Aprovado pela IA
-                          </span>
+                          </button>
                         ) : item.status === 2 ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-destructive">
+                          <button onClick={() => setAiModal({ open: true, decision: "reproved", id: item.id })} className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline cursor-pointer">
                             <Bot className="w-3.5 h-3.5" />
                             Reprovado pela IA
-                          </span>
+                          </button>
                         ) : (
                           <span className="text-xs text-muted-foreground">—</span>
                         )}
@@ -502,6 +504,14 @@ const Relatorios = () => {
           </div>
         </div>
       </div>
+      {aiModal && (
+        <AiAnalysisModal
+          open={aiModal.open}
+          onOpenChange={(open) => !open && setAiModal(null)}
+          decision={aiModal.decision}
+          reservationId={aiModal.id}
+        />
+      )}
     </Layout>
   );
 };

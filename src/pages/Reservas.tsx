@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import AiAnalysisModal from "@/components/AiAnalysisModal";
 import Layout from "@/components/layout/Layout";
 import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot } from "lucide-react";
 
@@ -257,6 +258,7 @@ const Reservas = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(50);
+  const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string } | null>(null);
   const totalPages = Math.max(1, Math.ceil(filteredReservations.length / perPage));
   const paginatedReservations = filteredReservations.slice((currentPage - 1) * perPage, currentPage * perPage);
 
@@ -479,15 +481,15 @@ const Reservas = () => {
                       </td>
                       <td className="px-5 py-4">
                         {r.aiDecision === "approved" ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                          <button onClick={() => setAiModal({ open: true, decision: "approved", id: r.id })} className="inline-flex items-center gap-1 text-xs font-medium text-green-700 hover:underline cursor-pointer">
                             <Bot className="w-3.5 h-3.5" />
                             Aprovado pela IA
-                          </span>
+                          </button>
                         ) : r.aiDecision === "reproved" ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-destructive">
+                          <button onClick={() => setAiModal({ open: true, decision: "reproved", id: r.id })} className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline cursor-pointer">
                             <Bot className="w-3.5 h-3.5" />
                             Reprovado pela IA
-                          </span>
+                          </button>
                         ) : (
                           <span className="text-xs text-muted-foreground">—</span>
                         )}
@@ -552,6 +554,14 @@ const Reservas = () => {
           )}
         </div>
       </TooltipProvider>
+      {aiModal && (
+        <AiAnalysisModal
+          open={aiModal.open}
+          onOpenChange={(open) => !open && setAiModal(null)}
+          decision={aiModal.decision}
+          reservationId={aiModal.id}
+        />
+      )}
     </Layout>
   );
 };
