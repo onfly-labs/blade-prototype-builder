@@ -258,6 +258,7 @@ const Reservas = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(50);
+  const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string } | null>(null);
   const totalPages = Math.max(1, Math.ceil(filteredReservations.length / perPage));
   const paginatedReservations = filteredReservations.slice((currentPage - 1) * perPage, currentPage * perPage);
 

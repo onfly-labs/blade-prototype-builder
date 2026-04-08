@@ -279,6 +279,7 @@ const getFlowName = (item: typeof mockApprovals[0]) => {
 const Relatorios = () => {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
+  const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: number } | null>(null);
 
   // Compute summaries
   const total = mockApprovals.length;
