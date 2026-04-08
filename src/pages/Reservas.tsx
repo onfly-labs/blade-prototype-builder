@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
-import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Briefcase, Filter, Calendar, MapPin, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -485,28 +485,35 @@ const Reservas = () => {
           </div>
 
           {filteredReservations.length > 0 && (
-            <div className="flex items-center justify-between mt-4 px-2">
-              <div className="flex items-center gap-3">
-                <p className="text-sm text-muted-foreground">
-                  Exibindo {((currentPage - 1) * perPage) + 1}–{Math.min(currentPage * perPage, filteredReservations.length)} de {filteredReservations.length} reservas
-                </p>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm text-muted-foreground">|</span>
-                  <span className="text-sm text-muted-foreground">Por página:</span>
-                  {[10, 25, 50].map((n) => (
-                    <Button key={n} variant={perPage === n ? "default" : "outline"} size="sm" className="h-7 px-2 text-xs" onClick={() => { setPerPage(n); setCurrentPage(1); }}>
-                      {n}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+            <div className="flex items-center justify-end mt-4 px-2 gap-6">
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
+                <span className="text-sm text-muted-foreground">Conteúdos por página:</span>
+                <Select value={String(perPage)} onValueChange={(v) => { setPerPage(Number(v)); setCurrentPage(1); }}>
+                  <SelectTrigger className="h-8 w-[70px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[10, 25, 50].map((n) => (
+                      <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {((currentPage - 1) * perPage) + 1}–{Math.min(currentPage * perPage, filteredReservations.length)} de {filteredReservations.length}
+              </span>
+              <div className="flex items-center gap-1">
+                <Button variant="outline" size="icon" className="h-8 w-8" disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
+                  <ChevronsLeft className="w-4 h-4" />
+                </Button>
+                <Button variant="outline" size="icon" className="h-8 w-8" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
-                <span className="text-sm font-medium">{currentPage} / {totalPages}</span>
-                <Button variant="outline" size="sm" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
+                <Button variant="outline" size="icon" className="h-8 w-8" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
                   <ChevronRight className="w-4 h-4" />
+                </Button>
+                <Button variant="outline" size="icon" className="h-8 w-8" disabled={currentPage === totalPages} onClick={() => setCurrentPage(totalPages)}>
+                  <ChevronsRight className="w-4 h-4" />
                 </Button>
               </div>
             </div>
