@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
-  Plane, Hotel, Car, Bus, CheckCircle, Zap, Shield, BarChart3,
-  ArrowRight, Globe, Clock, Users, CreditCard, ChevronRight
+  Plane, Hotel, Car, Bus, Zap, Shield, BarChart3,
+  ArrowRight, Globe, Clock, Users, CheckCircle, ChevronRight,
+  Timer, TrendingUp, BellRing, GitBranch
 } from "lucide-react";
+import reservasScreenshot from "@/assets/reservas-screenshot.png";
+import heroBg from "@/assets/hero-bg.jpg";
 
 const LandingPage = () => {
   const { user, loading, signInWithGoogle } = useAuth();
@@ -26,9 +29,9 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900 font-sans">
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100/60">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Globe className="w-7 h-7 text-[#00a0e4]" />
@@ -37,15 +40,14 @@ const LandingPage = () => {
               <span className="text-[#00a0e4]">fly</span>
             </span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <a href="#features" className="hover:text-[#0b2a45] transition-colors">Produto</a>
-            <a href="#benefits" className="hover:text-[#0b2a45] transition-colors">Benefícios</a>
-            <a href="#how" className="hover:text-[#0b2a45] transition-colors">Como funciona</a>
-            <a href="#cta" className="hover:text-[#0b2a45] transition-colors">Planos</a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
+            <a href="#produto" className="hover:text-[#0b2a45] transition-colors">Produto</a>
+            <a href="#automacao" className="hover:text-[#0b2a45] transition-colors">Automação</a>
+            <a href="#metricas" className="hover:text-[#0b2a45] transition-colors">Resultados</a>
           </div>
           <Button
             onClick={handleExperimentar}
-            className="bg-[#00a0e4] hover:bg-[#0090d0] text-white font-semibold px-6 rounded-full shadow-lg shadow-[#00a0e4]/20"
+            className="bg-[#00a0e4] hover:bg-[#0090d0] text-white font-semibold px-6 rounded-full shadow-lg shadow-[#00a0e4]/20 text-sm"
           >
             Quero experimentar
           </Button>
@@ -53,169 +55,238 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f0f9ff] via-white to-[#f0f4ff]" />
-        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-[#00a0e4]/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0b2a45]/5 rounded-full blur-3xl" />
-        <div className="max-w-7xl mx-auto relative">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-[#00a0e4]/10 text-[#00a0e4] text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
-              <Zap className="w-4 h-4" />
-              + de 3.2 mil empresas já simplificam com a Onfly
-            </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-[#0b2a45] mb-6">
-              Viagem a trabalho{" "}
-              <span className="text-[#00a0e4]">não precisa dar trabalho</span>
-            </h1>
-            <p className="text-xl text-gray-500 max-w-xl mb-10 leading-relaxed">
-              Chega de perrengue para organizar viagens e despesas corporativas. Economize até 40% com gestão em tempo real.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                onClick={handleExperimentar}
-                size="lg"
-                className="bg-[#00a0e4] hover:bg-[#0090d0] text-white text-lg px-10 py-6 rounded-full shadow-xl shadow-[#00a0e4]/25 font-semibold"
-              >
-                Quero experimentar
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-gray-300 text-gray-700 text-lg px-10 py-6 rounded-full hover:bg-gray-50 font-medium"
-              >
-                Agendar demonstração
-              </Button>
-            </div>
-          </div>
+      <section className="relative pt-28 pb-0 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroBg})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white" />
 
-          {/* Floating cards */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { icon: Plane, label: "Passagens aéreas", desc: "Melhores tarifas" },
-              { icon: Hotel, label: "Hotéis", desc: "200mil+ opções" },
-              { icon: Car, label: "Aluguel de carros", desc: "Frotas nacionais" },
-              { icon: Bus, label: "Rodoviário", desc: "Todo o Brasil" },
-            ].map((item) => (
-              <div key={item.label} className="bg-white rounded-2xl p-5 shadow-lg shadow-gray-100/80 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="w-11 h-11 rounded-xl bg-[#00a0e4]/10 flex items-center justify-center mb-3">
-                  <item.icon className="w-5 h-5 text-[#00a0e4]" />
-                </div>
-                <p className="font-semibold text-[#0b2a45] text-sm">{item.label}</p>
-                <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - copy */}
+            <div className="py-12 lg:py-20">
+              <div className="inline-flex items-center gap-2 bg-[#00a0e4]/10 text-[#00a0e4] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
+                <Zap className="w-3.5 h-3.5" />
+                Gestão inteligente de viagens
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section id="features" className="py-24 px-6 bg-[#f8fafc]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-[#00a0e4] uppercase tracking-widest mb-3">Produto</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#0b2a45] mb-4">
-              Tudo em uma só plataforma
-            </h2>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-              Do planejamento ao relatório, gerencie viagens corporativas com autonomia, controle e economia.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Zap,
-                title: "Reservas em minutos",
-                desc: "Reserve passagens, hotéis e carros em até 3 minutos com total autonomia. Tudo integrado em um só lugar.",
-              },
-              {
-                icon: Shield,
-                title: "Aprovações inteligentes",
-                desc: "Políticas de viagem automatizadas. Aprovações automáticas para viagens dentro da política, fluxo gerencial para exceções.",
-              },
-              {
-                icon: BarChart3,
-                title: "Relatórios em tempo real",
-                desc: "Dashboards completos com visão por centro de custo, status de aprovação e economia gerada por período.",
-              },
-            ].map((item) => (
-              <div key={item.title} className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00a0e4]/10 to-[#00a0e4]/5 flex items-center justify-center mb-5">
-                  <item.icon className="w-7 h-7 text-[#00a0e4]" />
-                </div>
-                <h3 className="text-xl font-bold text-[#0b2a45] mb-3">{item.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section id="benefits" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm font-semibold text-[#00a0e4] uppercase tracking-widest mb-3">Benefícios</p>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-[#0b2a45] mb-6 leading-tight">
-                Economize até <span className="text-[#00a0e4]">40%</span> nas viagens corporativas
-              </h2>
-              <p className="text-lg text-gray-500 mb-10 leading-relaxed">
-                Mais de 3.200 empresas já usam a Onfly para simplificar a gestão de viagens e despesas.
+              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight text-[#0b2a45] mb-5">
+                Reservas rápidas.
+                <br />
+                Aprovações{" "}
+                <span className="text-[#00a0e4]">automáticas.</span>
+                <br />
+                Controle total.
+              </h1>
+              <p className="text-lg text-gray-500 max-w-md mb-8 leading-relaxed">
+                Reduza de horas para minutos o ciclo completo de reserva, aprovação e relatório de viagens corporativas.
               </p>
-              <div className="space-y-5">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  onClick={handleExperimentar}
+                  size="lg"
+                  className="bg-[#00a0e4] hover:bg-[#0090d0] text-white text-base px-8 py-6 rounded-full shadow-xl shadow-[#00a0e4]/25 font-semibold gap-2"
+                >
+                  Experimentar grátis
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="text-gray-500 hover:text-[#0b2a45] text-base px-8 py-6 rounded-full font-medium"
+                >
+                  Ver demonstração
+                </Button>
+              </div>
+
+              {/* Mini stats */}
+              <div className="flex gap-8 mt-10 pt-8 border-t border-gray-200/60">
                 {[
-                  { icon: Clock, text: "Reduza o tempo de reserva de horas para minutos" },
-                  { icon: CreditCard, text: "Cartão corporativo integrado, fim de reembolsos" },
-                  { icon: Users, text: "Gestão centralizada para toda a equipe" },
-                  { icon: CheckCircle, text: "Integração com ERPs e sistemas de pagamento" },
-                ].map((item) => (
-                  <div key={item.text} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#00a0e4]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <item.icon className="w-5 h-5 text-[#00a0e4]" />
-                    </div>
-                    <p className="text-gray-700 font-medium">{item.text}</p>
+                  { value: "3min", label: "tempo médio de reserva" },
+                  { value: "85%", label: "aprovações automáticas" },
+                  { value: "40%", label: "economia em viagens" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className="text-2xl font-extrabold text-[#0b2a45]">{s.value}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{s.label}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-5">
-              {[
-                { value: "40%", label: "de economia média" },
-                { value: "3min", label: "para fazer uma reserva" },
-                { value: "3.2k+", label: "empresas ativas" },
-                { value: "24/7", label: "suporte especializado" },
-              ].map((stat) => (
-                <div key={stat.label} className="bg-gradient-to-br from-[#0b2a45] to-[#163a5c] rounded-3xl p-7 text-center">
-                  <p className="text-4xl font-extrabold text-[#00a0e4] mb-2">{stat.value}</p>
-                  <p className="text-sm text-gray-300 font-medium">{stat.label}</p>
+
+            {/* Right - screenshot */}
+            <div className="relative hidden lg:block">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-br from-[#00a0e4]/20 to-[#0b2a45]/10 rounded-3xl blur-2xl" />
+                <img
+                  src={reservasScreenshot}
+                  alt="Painel de reservas da Onfly mostrando viagens com status de aprovação"
+                  className="relative rounded-2xl shadow-2xl shadow-[#0b2a45]/15 border border-gray-200/50"
+                  width={1280}
+                  height={720}
+                />
+              </div>
+              {/* Floating badge */}
+              <div className="absolute -left-6 bottom-16 bg-white rounded-2xl shadow-xl shadow-gray-200/60 p-4 flex items-center gap-3 border border-gray-100">
+                <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
                 </div>
-              ))}
+                <div>
+                  <p className="text-sm font-bold text-[#0b2a45]">Aprovada automaticamente</p>
+                  <p className="text-xs text-gray-400">Dentro da política • 2s atrás</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section id="how" className="py-24 px-6 bg-[#f8fafc]">
+      {/* Product Section */}
+      <section id="produto" className="py-24 px-6 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-[#00a0e4] uppercase tracking-widest mb-3">Como funciona</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#0b2a45] mb-4">
-              Simples assim
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <p className="text-xs font-bold text-[#00a0e4] uppercase tracking-[0.2em] mb-3">Produto</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b2a45] mb-4">
+              Uma plataforma para todo o ciclo de viagem
             </h2>
+            <p className="text-gray-500">
+              Da solicitação ao relatório final — reservas, aprovações e prestação de contas em um único lugar.
+            </p>
           </div>
-          <div className="grid md:grid-cols-4 gap-8">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { step: "01", title: "Solicite", desc: "O colaborador faz a reserva direto na plataforma" },
-              { step: "02", title: "Aprove", desc: "O gestor recebe e aprova em segundos — ou a política aprova automaticamente" },
-              { step: "03", title: "Viaje", desc: "Tudo confirmado: bilhetes, hotel e transporte prontos" },
-              { step: "04", title: "Analise", desc: "Relatórios completos de custo, economia e conformidade" },
+              { icon: Plane, label: "Aéreo", desc: "Passagens com as melhores tarifas negociadas", color: "from-sky-500 to-blue-600" },
+              { icon: Hotel, label: "Hotéis", desc: "200 mil+ opções em todo o Brasil e exterior", color: "from-violet-500 to-purple-600" },
+              { icon: Car, label: "Carros", desc: "Locação integrada com frotas nacionais", color: "from-amber-500 to-orange-600" },
+              { icon: Bus, label: "Rodoviário", desc: "Cobertura completa de rotas nacionais", color: "from-emerald-500 to-teal-600" },
             ].map((item) => (
-              <div key={item.step} className="relative">
-                <div className="text-6xl font-black text-[#00a0e4]/10 mb-2">{item.step}</div>
-                <h3 className="text-lg font-bold text-[#0b2a45] mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+              <div key={item.label} className="group bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 shadow-lg shadow-gray-200/50`}>
+                  <item.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-bold text-[#0b2a45] text-lg mb-1">{item.label}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Automation Section */}
+      <section id="automacao" className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-xs font-bold text-[#00a0e4] uppercase tracking-[0.2em] mb-3">Automação de fluxos</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b2a45] mb-5 leading-tight">
+                Aprovações que funcionam <span className="text-[#00a0e4]">sozinhas</span>
+              </h2>
+              <p className="text-gray-500 mb-10 leading-relaxed">
+                Configure regras de política de viagem e deixe o sistema trabalhar. Reservas dentro da política são aprovadas instantaneamente — sem gargalos, sem atrasos.
+              </p>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: GitBranch,
+                    title: "Fluxos condicionais",
+                    desc: "Defina regras por valor, tipo de reserva, centro de custo ou nível hierárquico.",
+                  },
+                  {
+                    icon: Zap,
+                    title: "Aprovação automática",
+                    desc: "Reservas dentro da política são aprovadas em menos de 2 segundos, sem intervenção.",
+                  },
+                  {
+                    icon: BellRing,
+                    title: "Alertas inteligentes",
+                    desc: "Notificações automáticas para aprovadores quando o prazo está se esgotando.",
+                  },
+                  {
+                    icon: Shield,
+                    title: "Compliance garantido",
+                    desc: "100% das reservas passam pelo fluxo de aprovação — nada escapa da política.",
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-4">
+                    <div className="w-11 h-11 rounded-xl bg-[#00a0e4]/10 flex items-center justify-center flex-shrink-0">
+                      <item.icon className="w-5 h-5 text-[#00a0e4]" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[#0b2a45] mb-0.5">{item.title}</h3>
+                      <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Visual flow */}
+            <div className="bg-gradient-to-br from-[#f0f9ff] to-[#f8fafc] rounded-3xl p-8 border border-gray-100">
+              <div className="space-y-4">
+                {[
+                  { step: "Solicitação", detail: "Colaborador reserva voo GRU → BSB", status: "done", time: "11:00" },
+                  { step: "Verificação de política", detail: "Valor R$ 890 dentro do limite de R$ 1.200", status: "done", time: "11:00" },
+                  { step: "Aprovação automática", detail: "Reserva aprovada pelo sistema", status: "auto", time: "11:00" },
+                  { step: "Emissão", detail: "Bilhete emitido e enviado ao viajante", status: "done", time: "11:01" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${
+                        item.status === "auto" ? "bg-[#00a0e4]" : "bg-[#0b2a45]"
+                      }`}>
+                        {item.status === "auto" ? <Zap className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                      </div>
+                      {i < 3 && <div className="w-px h-8 bg-gray-200 mt-1" />}
+                    </div>
+                    <div className="flex-1 pb-2">
+                      <div className="flex items-center justify-between">
+                        <p className="font-bold text-[#0b2a45] text-sm">{item.step}</p>
+                        <span className="text-xs text-gray-300 font-mono">{item.time}</span>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-0.5">{item.detail}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-5 border-t border-gray-200/60 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm">
+                  <Timer className="w-4 h-4 text-[#00a0e4]" />
+                  <span className="font-bold text-[#0b2a45]">Tempo total: 1 minuto</span>
+                </div>
+                <span className="text-xs bg-green-50 text-green-600 font-semibold px-3 py-1 rounded-full">Sem intervenção manual</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Metrics */}
+      <section id="metricas" className="py-24 px-6 bg-[#0b2a45]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <p className="text-xs font-bold text-[#00a0e4] uppercase tracking-[0.2em] mb-3">Resultados reais</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
+              Produtividade que aparece nos números
+            </h2>
+            <p className="text-gray-400">
+              Empresas que usam a Onfly transformam a gestão de viagens em vantagem competitiva.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: TrendingUp, value: "40%", label: "redução de custos com viagens", desc: "Comparado à gestão manual" },
+              { icon: Timer, value: "95%", label: "mais rápido nas aprovações", desc: "De 48h para minutos" },
+              { icon: BarChart3, value: "3.2k+", label: "empresas confiam na Onfly", desc: "De startups a enterprises" },
+              { icon: Users, value: "100%", label: "visibilidade dos gastos", desc: "Relatórios em tempo real" },
+            ].map((item) => (
+              <div key={item.label} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                <item.icon className="w-6 h-6 text-[#00a0e4] mb-4" />
+                <p className="text-4xl font-extrabold text-white mb-1">{item.value}</p>
+                <p className="text-sm font-semibold text-gray-300 mb-1">{item.label}</p>
+                <p className="text-xs text-gray-500">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -223,41 +294,33 @@ const LandingPage = () => {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-[#0b2a45] to-[#163a5c] rounded-[2rem] p-12 md:p-16 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00a0e4]/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#00a0e4]/5 rounded-full blur-2xl" />
-            <div className="relative">
-              <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
-                Pronto para simplificar suas viagens?
-              </h2>
-              <p className="text-lg text-gray-300 mb-10 max-w-xl mx-auto">
-                Experimente gratuitamente e veja como é fácil gerenciar viagens corporativas com a Onfly.
-              </p>
-              <Button
-                onClick={handleExperimentar}
-                size="lg"
-                className="bg-[#00a0e4] hover:bg-[#0090d0] text-white text-lg px-12 py-6 rounded-full shadow-xl shadow-[#00a0e4]/30 font-semibold"
-              >
-                Quero experimentar agora
-                <ChevronRight className="w-5 h-5 ml-2" />
-              </Button>
-            </div>
-          </div>
+      <section className="py-24 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b2a45] mb-4">
+            Pronto para automatizar suas viagens?
+          </h2>
+          <p className="text-lg text-gray-500 mb-8 max-w-xl mx-auto">
+            Comece agora e veja como é fácil ter controle total sobre reservas, aprovações e custos.
+          </p>
+          <Button
+            onClick={handleExperimentar}
+            size="lg"
+            className="bg-[#00a0e4] hover:bg-[#0090d0] text-white text-lg px-12 py-6 rounded-full shadow-xl shadow-[#00a0e4]/25 font-semibold gap-2"
+          >
+            Quero experimentar agora
+            <ChevronRight className="w-5 h-5" />
+          </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-gray-100">
+      <footer className="py-10 px-6 border-t border-gray-100">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Globe className="w-5 h-5 text-[#00a0e4]" />
             <span className="font-bold text-[#0b2a45]">on<span className="text-[#00a0e4]">fly</span></span>
           </div>
-          <p className="text-sm text-gray-400">
-            © 2026 Onfly. Todos os direitos reservados. Viagens corporativas simplificadas.
-          </p>
+          <p className="text-xs text-gray-400">© 2026 Onfly. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>
