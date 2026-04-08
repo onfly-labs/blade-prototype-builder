@@ -474,10 +474,32 @@ const Reservas = () => {
                         <td className="px-5 py-4">
                           <div className="flex items-center gap-2">
                             {r.status === "Pendente" && (
-                              <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg text-green-700 border-green-300 hover:bg-green-50">
-                                <CheckCircle2 className="w-3.5 h-3.5" />
-                                Aprovar
-                              </Button>
+                              <>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="gap-1.5 text-xs rounded-lg text-green-700 border-green-300 hover:bg-green-50"
+                                  onClick={() => {
+                                    setReservations(prev => prev.map(res => res.id === r.id ? { ...res, status: "Aprovada" } : res));
+                                    toast({ title: "Reserva aprovada", description: `Reserva ${r.id} foi aprovada com sucesso.` });
+                                  }}
+                                >
+                                  <CheckCircle2 className="w-3.5 h-3.5" />
+                                  Aprovar
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="gap-1.5 text-xs rounded-lg text-destructive border-red-300 hover:bg-red-50"
+                                  onClick={() => {
+                                    setReservations(prev => prev.map(res => res.id === r.id ? { ...res, status: "Reprovada" } : res));
+                                    toast({ title: "Reserva reprovada", description: `Reserva ${r.id} foi reprovada.` });
+                                  }}
+                                >
+                                  <XCircle className="w-3.5 h-3.5" />
+                                  Reprovar
+                                </Button>
+                              </>
                             )}
                           </div>
                         </td>
