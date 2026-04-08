@@ -204,16 +204,18 @@ const Reservas = () => {
   const filteredReservations = useMemo(() => {
     let data = reservations;
 
+    const today = new Date(new Date().toISOString().split("T")[0]);
+
     // Tab filtering
     if (activeTab === 0) {
-      // Próximas viagens: Confirmada or Pendente
-      data = data.filter((r) => r.status === "Confirmada" || r.status === "Pendente");
+      // Próximas viagens: data futura (Confirmada, Pendente ou Expirada com data futura)
+      data = data.filter((r) => new Date(r.tripDate) >= today && (r.status === "Confirmada" || r.status === "Pendente" || r.status === "Expirada"));
     } else if (activeTab === 1) {
       // Minhas viagens
       data = data.filter((r) => r.myTrip);
     } else if (activeTab === 2) {
-      // Histórico: aprovadas + expiradas
-      data = data.filter((r) => r.status === "Aprovada" || r.status === "Expirada");
+      // Histórico: somente reservas com data anterior a hoje
+      data = data.filter((r) => new Date(r.tripDate) < today);
     }
 
     // Additional filters
