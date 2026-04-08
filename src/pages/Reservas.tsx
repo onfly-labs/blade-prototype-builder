@@ -478,6 +478,21 @@ const Reservas = () => {
                         </span>
                       </td>
                       <td className="px-5 py-4">
+                        {r.aiDecision === "approved" ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                            <Bot className="w-3.5 h-3.5" />
+                            Aprovado pela IA
+                          </span>
+                        ) : r.aiDecision === "reproved" ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-destructive">
+                            <Bot className="w-3.5 h-3.5" />
+                            Reprovado pela IA
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">—</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
                           {r.status === "Pendente" && (
                             <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg text-green-700 border-green-300 hover:bg-green-50">
