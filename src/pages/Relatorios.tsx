@@ -423,7 +423,7 @@ const Relatorios = () => {
                   <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">Descrição</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">Centro de Custo</th>
                   <th className="text-right text-xs font-medium text-muted-foreground px-4 py-3">Valor</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">Fluxo</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">IA</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">Status</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">Criado em</th>
                   <th className="text-left text-xs font-medium text-muted-foreground px-4 py-3">Decisão</th>
