@@ -342,16 +342,31 @@ const Reservas = () => {
                 </button>
               ))}
             </div>
-            <Popover open={showFilters} onOpenChange={setShowFilters}>
-              <PopoverTrigger asChild>
-                <Button variant="default" size="sm" className="rounded-xl gap-2 relative">
-                  <Filter className="w-4 h-4" />
-                  Filtros
-                  {hasActiveFilters && (
-                    <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-destructive" />
-                  )}
-                </Button>
-              </PopoverTrigger>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-xl gap-2 text-primary border-primary/30 hover:bg-primary/5"
+                disabled={analyzingAll}
+                onClick={handleAnalyzeAllPending}
+              >
+                {analyzingAll ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Bot className="w-4 h-4" />
+                )}
+                {analyzingAll ? "Analisando..." : "Analisar com IA"}
+              </Button>
+              <Popover open={showFilters} onOpenChange={setShowFilters}>
+                <PopoverTrigger asChild>
+                  <Button variant="default" size="sm" className="rounded-xl gap-2 relative">
+                    <Filter className="w-4 h-4" />
+                    Filtros
+                    {hasActiveFilters && (
+                      <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-destructive" />
+                    )}
+                  </Button>
+                </PopoverTrigger>
               <PopoverContent className="w-[420px] p-4" align="end">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-foreground">Filtros</h3>
