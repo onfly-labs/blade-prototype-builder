@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const agentUrl = Deno.env.get('ONFLY_AGENT_API_URL')
+    const agentUrl = (Deno.env.get('ONFLY_AGENT_API_URL') || '').replace(/\/+$/, '')
     if (!agentUrl) {
       return new Response(JSON.stringify({ error: 'ONFLY_AGENT_API_URL not configured' }), {
         status: 500,
@@ -17,11 +17,7 @@ Deno.serve(async (req) => {
       })
     }
 
-    const url = new URL(req.url)
-    const testPath = url.searchParams.get('path') || '/api/agent/api-logs'
-    const targetUrl = `${agentUrl}${testPath}`
-
-    console.log('[DEBUG] ONFLY_AGENT_API_URL:', agentUrl)
+    const targetUrl = `${agentUrl}/api/agent/api-logs`
     console.log('[DEBUG] Target URL:', targetUrl)
 
     const response = await fetch(targetUrl, {
@@ -30,25 +26,15 @@ Deno.serve(async (req) => {
     })
 
     const responseText = await response.text()
-    console.log('[DEBUG] Response status:', response.status)
-    console.log('[DEBUG] Response:', responseText.substring(0, 500))
-
     try {
       const data = JSON.parse(responseText)
-      return new Response(JSON.stringify({ 
-        debug: { urlCalled: targetUrl, status: response.status },
-        data 
-      }), {
-        status: 200,
+      return new Response(JSON.stringify(data), {
+        status: response.status,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     } catch {
-      return new Response(JSON.stringify({ 
-        debug: { urlCalled: targetUrl, status: response.status },
-        error: 'Non-JSON response',
-        preview: responseText.substring(0, 300)
-      }), {
-        status: 200,
+      return new Response(JSON.stringify({ error: 'Agent returned non-JSON response', status: response.status }), {
+        status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }

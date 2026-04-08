@@ -16,7 +16,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const agentUrl = Deno.env.get('ONFLY_AGENT_API_URL')
+    const agentUrl = (Deno.env.get('ONFLY_AGENT_API_URL') || '').replace(/\/+$/, '')
     if (!agentUrl) {
       return new Response(JSON.stringify({ error: 'ONFLY_AGENT_API_URL not configured' }), {
         status: 500,
@@ -26,7 +26,6 @@ Deno.serve(async (req) => {
 
     const body = await req.json()
 
-    // Validate required fields
     if (!body.reservation || !body.reservation.id || !body.reservation.type || !body.reservation.data) {
       return new Response(JSON.stringify({ error: 'Missing required fields: reservation.id, reservation.type, reservation.data' }), {
         status: 422,
@@ -40,11 +39,19 @@ Deno.serve(async (req) => {
       body: JSON.stringify(body),
     })
 
-    const data = await response.json()
-    return new Response(JSON.stringify(data), {
-      status: response.status,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    const responseText = await response.text()
+    try {
+      const data = JSON.parse(responseText)
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    } catch {
+      return new Response(JSON.stringify({ error: 'Agent returned non-JSON response', status: response.status }), {
+        status: 502,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
   } catch (error) {
     console.error('agent-evaluate error:', error)
     return new Response(JSON.stringify({ error: error.message }), {
