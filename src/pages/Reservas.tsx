@@ -231,7 +231,7 @@ const Reservas = () => {
   }, [activeTab, filterId, filterType, filterStatus, filterTraveler, filterCostCenter, filterOrigin, filterDestination]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const perPage = 50;
+  const [perPage, setPerPage] = useState(50);
   const totalPages = Math.max(1, Math.ceil(filteredReservations.length / perPage));
   const paginatedReservations = filteredReservations.slice((currentPage - 1) * perPage, currentPage * perPage);
 
