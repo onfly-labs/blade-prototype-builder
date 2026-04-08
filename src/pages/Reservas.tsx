@@ -71,6 +71,7 @@ const reservations: Reservation[] = [
     approvalDeadline: "2026-04-09T08:00:00",
     hoursLeft: 10,
     myTrip: true,
+    aiDecision: "reproved",
   },
   {
     id: "#12B738",
