@@ -152,6 +152,7 @@ const Reservas = () => {
   const [perPage, setPerPage] = useState(50);
   const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string } | null>(null);
   const [analyzingIds, setAnalyzingIds] = useState<Record<string, boolean>>({});
+  const [analyzingAll, setAnalyzingAll] = useState(false);
 
   const typeToAgentType: Record<string, string> = {
     "Aéreo": "flight",
@@ -222,6 +223,31 @@ const Reservas = () => {
     } finally {
       setAnalyzingIds(prev => ({ ...prev, [r.id]: false }));
     }
+  };
+
+  const handleAnalyzeAllPending = async () => {
+    const pending = reservations.filter(r => r.status === "Pendente");
+    if (pending.length === 0) {
+      toast({ title: "Sem reservas pendentes", description: "Não há reservas pendentes para analisar." });
+      return;
+    }
+    setAnalyzingAll(true);
+    let approved = 0, rejected = 0, errors = 0;
+    for (const r of pending) {
+      try {
+        await handleAnalyzeWithAI(r);
+        const updated = reservations.find(res => res.id === r.id);
+        if (updated?.aiDecision === "approved") approved++;
+        else if (updated?.aiDecision === "reproved") rejected++;
+      } catch {
+        errors++;
+      }
+    }
+    setAnalyzingAll(false);
+    toast({
+      title: "Análise concluída",
+      description: `${pending.length} reservas analisadas pela IA.`,
+    });
   };
 
   const mockData = [
@@ -342,16 +368,31 @@ const Reservas = () => {
                 </button>
               ))}
             </div>
-            <Popover open={showFilters} onOpenChange={setShowFilters}>
-              <PopoverTrigger asChild>
-                <Button variant="default" size="sm" className="rounded-xl gap-2 relative">
-                  <Filter className="w-4 h-4" />
-                  Filtros
-                  {hasActiveFilters && (
-                    <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-destructive" />
-                  )}
-                </Button>
-              </PopoverTrigger>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-xl gap-2 text-primary border-primary/30 hover:bg-primary/5"
+                disabled={analyzingAll}
+                onClick={handleAnalyzeAllPending}
+              >
+                {analyzingAll ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Bot className="w-4 h-4" />
+                )}
+                {analyzingAll ? "Analisando..." : "Analisar com IA"}
+              </Button>
+              <Popover open={showFilters} onOpenChange={setShowFilters}>
+                <PopoverTrigger asChild>
+                  <Button variant="default" size="sm" className="rounded-xl gap-2 relative">
+                    <Filter className="w-4 h-4" />
+                    Filtros
+                    {hasActiveFilters && (
+                      <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-destructive" />
+                    )}
+                  </Button>
+                </PopoverTrigger>
               <PopoverContent className="w-[420px] p-4" align="end">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-foreground">Filtros</h3>
@@ -449,17 +490,18 @@ const Reservas = () => {
                 </Button>
               </PopoverContent>
             </Popover>
+            </div>
           </div>
 
           {/* Table */}
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
+          <div className="bg-card rounded-2xl border border-border overflow-x-auto">
             {loading ? (
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
                 <span className="ml-3 text-muted-foreground">Carregando reservas...</span>
               </div>
             ) : (
-              <table className="w-full">
+              <table className="w-full min-w-[1200px]">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Reserva</th>
@@ -571,20 +613,6 @@ const Reservas = () => {
                                 >
                                   <XCircle className="w-3.5 h-3.5" />
                                   Reprovar
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="gap-1.5 text-xs rounded-lg text-primary border-primary/30 hover:bg-primary/5"
-                                  disabled={!!analyzingIds[r.id]}
-                                  onClick={() => handleAnalyzeWithAI(r)}
-                                >
-                                  {analyzingIds[r.id] ? (
-                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                                  ) : (
-                                    <Bot className="w-3.5 h-3.5" />
-                                  )}
-                                  {analyzingIds[r.id] ? "Analisando..." : "Analisar IA"}
                                 </Button>
                               </>
                             )}
