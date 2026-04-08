@@ -30,8 +30,17 @@ const reservations = [
     origin: "São Paulo (GRU)",
     destination: "Brasília (BSB)",
     date: "20/04/2026",
-    status: "Confirmada",
+    status: "Expirada",
     traveler: "Maria Santos",
+  },
+  {
+    id: 4,
+    type: "Hotel",
+    origin: "Brasília",
+    destination: "Hotel Nacional",
+    date: "01/04/2026 – 03/04/2026",
+    status: "Expirada",
+    traveler: "João Pereira",
   },
 ];
 
