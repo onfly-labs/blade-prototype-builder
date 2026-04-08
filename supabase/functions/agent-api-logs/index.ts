@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const agentUrl = Deno.env.get('ONFLY_AGENT_API_URL')
+    const agentUrl = (Deno.env.get('ONFLY_AGENT_API_URL') || '').replace(/\/+$/, '')
     if (!agentUrl) {
       return new Response(JSON.stringify({ error: 'ONFLY_AGENT_API_URL not configured' }), {
         status: 500,
@@ -17,16 +17,27 @@ Deno.serve(async (req) => {
       })
     }
 
-    const response = await fetch(`${agentUrl}/api/agent/api-logs`, {
+    const targetUrl = `${agentUrl}/api/agent/api-logs`
+    console.log('[DEBUG] Target URL:', targetUrl)
+
+    const response = await fetch(targetUrl, {
       method: 'GET',
       headers: { 'Accept': 'application/json' },
     })
 
-    const data = await response.json()
-    return new Response(JSON.stringify(data), {
-      status: response.status,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    const responseText = await response.text()
+    try {
+      const data = JSON.parse(responseText)
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    } catch {
+      return new Response(JSON.stringify({ error: 'Agent returned non-JSON response', status: response.status }), {
+        status: 502,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
   } catch (error) {
     console.error('agent-api-logs error:', error)
     return new Response(JSON.stringify({ error: error.message }), {
