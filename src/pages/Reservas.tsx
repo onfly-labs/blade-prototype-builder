@@ -149,36 +149,29 @@ const Reservas = () => {
   const [perPage, setPerPage] = useState(50);
   const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string } | null>(null);
 
+  const mockData = [
+    { id: 6690003, type: "HotelOrder", decidedDate: null, createdDate: "2026-04-08 11:38:04", expiresAt: "2026-04-09 11:38:04", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 64710, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Visitas com o Chiabai" },
+    { id: 6690079, type: "HotelOrder", decidedDate: null, createdDate: "2026-04-08 11:44:06", expiresAt: "2026-04-09 11:44:06", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 17174, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Acompanhar Filipe Chiabai" },
+    { id: 6690149, type: "FlyOrder", decidedDate: null, createdDate: "2026-04-08 11:48:51", expiresAt: "2026-04-09 11:48:51", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 97345, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Visita na Zurich com o Lucas Pirchiner" },
+    { id: 6691062, type: "HotelOrder", decidedDate: null, createdDate: "2026-04-08 13:34:18", expiresAt: "2026-04-09 13:34:17", status: 1, solicitor: { data: { name: "Jhonny Ribeiro" } }, totalAmount: 17800, costCenter: { data: { code: "01AD120202", name: "ATG-OPERACOES - SUPERVISAO DE REDE" } }, description: "Visita a MG53" },
+    { id: 6688501, type: "FlyOrder", decidedDate: "2026-04-07 09:15:00", createdDate: "2026-04-06 14:20:00", expiresAt: "2026-04-07 14:20:00", status: 3, solicitor: { data: { name: "Carlos Oliveira" } }, totalAmount: 125000, costCenter: { data: { code: "01AD300102", name: "B4B-ADM - FINANCEIRO" } }, description: "Reunião com cliente em SP" },
+    { id: 6688602, type: "HotelOrder", decidedDate: "2026-04-07 10:30:00", createdDate: "2026-04-06 16:00:00", expiresAt: "2026-04-07 16:00:00", status: 3, solicitor: { data: { name: "Ana Costa" } }, totalAmount: 45000, costCenter: { data: { code: "01AD300102", name: "B4B-ADM - FINANCEIRO" } }, description: "Hospedagem para treinamento" },
+    { id: 6688710, type: "CarOrder", decidedDate: "2026-04-06 08:00:00", createdDate: "2026-04-05 15:30:00", expiresAt: "2026-04-06 15:30:00", status: 3, solicitor: { data: { name: "Marcos Tavares" } }, totalAmount: 18500, costCenter: { data: { code: "01AD120201", name: "ATG-OPERACOES - LOGISTICA" } }, description: "Deslocamento para visita técnica", history: { data: [{ action: "approved", changedBy: { data: { name: "IA Automática" } } }] } },
+    { id: 6688811, type: "FlyOrder", decidedDate: "2026-04-06 08:00:00", createdDate: "2026-04-05 10:00:00", expiresAt: "2026-04-06 10:00:00", status: 3, solicitor: { data: { name: "Fernanda Lima" } }, totalAmount: 52000, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Voo para congresso", history: { data: [{ action: "approved", changedBy: { data: { name: "IA Automática" } } }] } },
+    { id: 6688920, type: "HotelOrder", decidedDate: "2026-04-05 16:00:00", createdDate: "2026-04-04 09:00:00", expiresAt: "2026-04-05 09:00:00", status: 2, solicitor: { data: { name: "João Pereira" } }, totalAmount: 89000, costCenter: { data: { code: "01AD300103", name: "B4B-ADM - DIRETORIA" } }, description: "Hotel acima do limite da política", history: { data: [{ action: "reproved", changedBy: { data: { name: "IA Automática" } } }] } },
+    { id: 6689001, type: "FlyOrder", decidedDate: "2026-04-06 12:00:00", createdDate: "2026-04-05 08:00:00", expiresAt: "2026-04-06 08:00:00", status: 2, solicitor: { data: { name: "Maria Santos" } }, totalAmount: 210000, costCenter: { data: { code: "01AD300103", name: "B4B-ADM - DIRETORIA" } }, description: "Classe executiva sem autorização", history: { data: [{ action: "reproved", changedBy: { data: { name: "IA Automática" } } }] } },
+    { id: 6689100, type: "BusOrder", decidedDate: null, createdDate: "2026-04-03 10:00:00", expiresAt: "2026-04-04 10:00:00", status: 4, solicitor: { data: { name: "Pedro Almeida" } }, totalAmount: 8500, costCenter: { data: { code: "01AD120201", name: "ATG-OPERACOES - LOGISTICA" } }, description: "Ônibus para evento interno" },
+    { id: 6689200, type: "FlyOrder", decidedDate: "2026-04-04 07:00:00", createdDate: "2026-04-03 14:00:00", expiresAt: "2026-04-04 14:00:00", status: 3, solicitor: { data: { name: "Lucas Martins" } }, totalAmount: 34000, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Trecho dentro da política - auto aprovado", history: { data: [{ action: "approved", changedBy: { data: { name: "IA Automática" } } }] } },
+    { id: 6689301, type: "HotelOrder", decidedDate: "2026-04-05 11:00:00", createdDate: "2026-04-04 16:00:00", expiresAt: "2026-04-05 16:00:00", status: 3, solicitor: { data: { name: "Camila Rodrigues" } }, totalAmount: 32000, costCenter: { data: { code: "01AD120202", name: "ATG-OPERACOES - SUPERVISAO DE REDE" } }, description: "Pernoite para auditoria" },
+    { id: 6689400, type: "CarOrder", decidedDate: "2026-04-07 14:00:00", createdDate: "2026-04-06 11:00:00", expiresAt: "2026-04-07 11:00:00", status: 2, solicitor: { data: { name: "Roberto Nunes" } }, totalAmount: 75000, costCenter: { data: { code: "01AD300103", name: "B4B-ADM - DIRETORIA" } }, description: "Locação premium não autorizada" },
+    { id: 6689500, type: "HotelOrder", decidedDate: "2026-04-06 07:00:00", createdDate: "2026-04-05 12:00:00", expiresAt: "2026-04-06 12:00:00", status: 3, solicitor: { data: { name: "Juliana Ferreira" } }, totalAmount: 22000, costCenter: { data: { code: "01AD120202", name: "ATG-OPERACOES - SUPERVISAO DE REDE" } }, description: "Hotel econômico - auto aprovado", history: { data: [{ action: "approved", changedBy: { data: { name: "IA Automática" } } }] } },
+  ];
+
   const fetchReservations = async () => {
     setLoading(true);
     try {
-      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/onfly-reservations?page=${currentPage}&perPage=${perPage}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const result = await response.json();
-      if (result.data) {
-        setReservations(parseApiResponse(result.data));
-        setTotalItems(result.meta?.pagination?.total || result.data.length);
-      }
-    } catch (error) {
-      console.error("Error fetching reservations:", error);
-      toast({
-        title: "Erro ao carregar reservas",
-        description: "Não foi possível carregar as reservas. Tente novamente.",
-        variant: "destructive",
-      });
+      setReservations(parseApiResponse(mockData));
+      setTotalItems(mockData.length);
     } finally {
       setLoading(false);
     }
