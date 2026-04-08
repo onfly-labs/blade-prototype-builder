@@ -164,7 +164,7 @@ const Reservas = () => {
   const handleAnalyzeWithAI = async (r: Reservation) => {
     setAnalyzingIds(prev => ({ ...prev, [r.id]: true }));
     try {
-      const activeRules = getActiveRules();
+      const activeRules = await getActiveRules();
       const prompt = activeRules.length > 0
         ? `Regras ativas da política de viagens:\n${activeRules.map((rule) => `- ${rule.name}: ${rule.description}`).join("\n")}`
         : undefined;
