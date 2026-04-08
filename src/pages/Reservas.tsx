@@ -4,6 +4,7 @@ import AiAnalysisModal from "@/components/AiAnalysisModal";
 import Layout from "@/components/layout/Layout";
 import { Briefcase, Filter, Calendar, Hotel, Plane, RefreshCw, Bell, Clock, X, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Car, Bus, ExternalLink, CheckCircle2, XCircle, Bot, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { getActiveRules } from "@/lib/rulesStore";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -150,6 +151,78 @@ const Reservas = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(50);
   const [aiModal, setAiModal] = useState<{ open: boolean; decision: "approved" | "reproved"; id: string } | null>(null);
+  const [analyzingIds, setAnalyzingIds] = useState<Record<string, boolean>>({});
+
+  const typeToAgentType: Record<string, string> = {
+    "Aéreo": "flight",
+    "Hotel": "hotel",
+    "Carro": "car",
+    "Ônibus": "bus",
+  };
+
+  const handleAnalyzeWithAI = async (r: Reservation) => {
+    setAnalyzingIds(prev => ({ ...prev, [r.id]: true }));
+    try {
+      const activeRules = getActiveRules();
+      const prompt = activeRules.length > 0
+        ? `Regras ativas da política de viagens:\n${activeRules.map((rule) => `- ${rule.name}: ${rule.description}`).join("\n")}`
+        : undefined;
+
+      const mockItem = mockData.find(m => `#${m.id}` === r.id);
+      const price = mockItem ? mockItem.totalAmount / 100 : 0;
+
+      const body = {
+        reservation: {
+          id: String(r.numericId),
+          type: typeToAgentType[r.type] || "flight",
+          data: {
+            price,
+            description: r.origin,
+            date: r.tripDate,
+            traveler: r.traveler,
+            costCenter: r.costCenter,
+          },
+        },
+        budget: 1000,
+        ...(prompt ? { prompt } : {}),
+      };
+
+      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+      const response = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/agent-evaluate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify(body),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result?.success && result?.data?.decision) {
+        const decision = result.data.decision;
+        if (decision === "approved") {
+          setReservations(prev => prev.map(res => res.id === r.id ? { ...res, aiDecision: "approved" } : res));
+          toast({ title: "IA: Reserva aprovada", description: result.data.reason || "Aprovada pela análise da IA." });
+        } else if (decision === "rejected") {
+          setReservations(prev => prev.map(res => res.id === r.id ? { ...res, aiDecision: "reproved" } : res));
+          toast({ title: "IA: Reserva reprovada", description: result.data.reason || "Reprovada pela análise da IA.", variant: "destructive" });
+        } else {
+          toast({ title: "IA: Revisão necessária", description: result.data.reason || "A IA recomenda revisão manual." });
+        }
+      } else {
+        toast({ title: "Erro na análise", description: result?.error || "Não foi possível analisar a reserva.", variant: "destructive" });
+      }
+    } catch (error) {
+      console.error("AI analysis error:", error);
+      toast({ title: "Erro na análise", description: "Falha ao conectar com o agente de IA.", variant: "destructive" });
+    } finally {
+      setAnalyzingIds(prev => ({ ...prev, [r.id]: false }));
+    }
+  };
 
   const mockData = [
     { id: 6690003, type: "HotelOrder", decidedDate: null, createdDate: "2026-04-08 11:38:04", expiresAt: "2026-04-09 11:38:04", status: 1, solicitor: { data: { name: "Regis Bruno Barbosa de Melo" } }, totalAmount: 64710, costCenter: { data: { code: "01AD300101", name: "B4B-ADM - COMERCIAL" } }, description: "Visitas com o Chiabai" },
@@ -498,6 +571,20 @@ const Reservas = () => {
                                 >
                                   <XCircle className="w-3.5 h-3.5" />
                                   Reprovar
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="gap-1.5 text-xs rounded-lg text-primary border-primary/30 hover:bg-primary/5"
+                                  disabled={!!analyzingIds[r.id]}
+                                  onClick={() => handleAnalyzeWithAI(r)}
+                                >
+                                  {analyzingIds[r.id] ? (
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                  ) : (
+                                    <Bot className="w-3.5 h-3.5" />
+                                  )}
+                                  {analyzingIds[r.id] ? "Analisando..." : "Analisar IA"}
                                 </Button>
                               </>
                             )}

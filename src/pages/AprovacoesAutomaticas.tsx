@@ -3,25 +3,13 @@ import Layout from "@/components/layout/Layout";
 import { ShieldCheck, Plus, ToggleLeft, ToggleRight, Trash2, Edit, Save, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-
-interface Rule {
-  id: number;
-  name: string;
-  description: string;
-  active: boolean;
-}
-
-const initialRules: Rule[] = [
-  { id: 1, name: "Limite de valor diária hotel", description: "Limitar valor de diária de hotel a R$500", active: true },
-  { id: 2, name: "Antecedência mínima aéreo", description: "Passagens aéreas devem ser compradas com 7 dias de antecedência", active: true },
-  { id: 3, name: "Aprovação para internacional", description: "Viagens internacionais precisam de aprovação do gestor", active: false },
-];
+import { getRules, saveRules, type Rule } from "@/lib/rulesStore";
 
 type View = "list" | "form";
 
 const AprovacoesAutomaticas = () => {
   const [view, setView] = useState<View>("list");
-  const [rules, setRules] = useState<Rule[]>(initialRules);
+  const [rules, setRules] = useState<Rule[]>(getRules());
   const [editingRule, setEditingRule] = useState<Rule | null>(null);
   const [formName, setFormName] = useState("");
   const [formDesc, setFormDesc] = useState("");
@@ -42,34 +30,37 @@ const AprovacoesAutomaticas = () => {
 
   const handleSave = () => {
     if (!formName.trim()) return;
+    let updated: Rule[];
     if (editingRule) {
-      setRules((prev) =>
-        prev.map((r) => (r.id === editingRule.id ? { ...r, name: formName, description: formDesc } : r))
-      );
+      updated = rules.map((r) => (r.id === editingRule.id ? { ...r, name: formName, description: formDesc } : r));
       toast({ title: "Regra atualizada", description: `"${formName}" foi salva com sucesso.` });
     } else {
       const newRule: Rule = { id: Date.now(), name: formName, description: formDesc, active: true };
-      setRules((prev) => [...prev, newRule]);
+      updated = [...rules, newRule];
       toast({ title: "Regra salva", description: `"${formName}" foi criada e ativada.` });
     }
+    setRules(updated);
+    saveRules(updated);
     setView("list");
   };
 
   const handleToggle = (id: number) => {
-    setRules((prev) =>
-      prev.map((r) => {
-        if (r.id === id) {
-          const next = { ...r, active: !r.active };
-          toast({ title: next.active ? "Regra ativada" : "Regra desativada", description: `"${r.name}" foi ${next.active ? "ativada" : "desativada"}.` });
-          return next;
-        }
-        return r;
-      })
-    );
+    const updated = rules.map((r) => {
+      if (r.id === id) {
+        const next = { ...r, active: !r.active };
+        toast({ title: next.active ? "Regra ativada" : "Regra desativada", description: `"${r.name}" foi ${next.active ? "ativada" : "desativada"}.` });
+        return next;
+      }
+      return r;
+    });
+    setRules(updated);
+    saveRules(updated);
   };
 
   const handleDelete = (id: number) => {
-    setRules((prev) => prev.filter((r) => r.id !== id));
+    const updated = rules.filter((r) => r.id !== id);
+    setRules(updated);
+    saveRules(updated);
     toast({ title: "Regra removida" });
   };
 
