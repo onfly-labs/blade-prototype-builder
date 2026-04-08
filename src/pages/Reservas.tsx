@@ -575,15 +575,25 @@ const Reservas = () => {
                         </td>
                         <td className="px-5 py-4">
                           {r.aiDecision === "approved" ? (
-                            <button onClick={() => setAiModal({ open: true, decision: "approved", id: r.id })} className="inline-flex items-center gap-1 text-xs font-medium text-green-700 hover:underline cursor-pointer">
-                              <Bot className="w-3.5 h-3.5" />
-                              Aprovado pela IA
-                            </button>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <button onClick={() => setAiModal({ open: true, decision: "approved", id: r.id, reason: r.aiReason })} className="inline-flex items-center gap-1 text-xs font-medium text-green-700 hover:underline cursor-pointer">
+                                  <Bot className="w-3.5 h-3.5" />
+                                  Aprovado pela IA
+                                </button>
+                              </TooltipTrigger>
+                              {r.aiReason && <TooltipContent className="max-w-xs"><p className="text-xs">{r.aiReason}</p></TooltipContent>}
+                            </Tooltip>
                           ) : r.aiDecision === "reproved" ? (
-                            <button onClick={() => setAiModal({ open: true, decision: "reproved", id: r.id })} className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline cursor-pointer">
-                              <Bot className="w-3.5 h-3.5" />
-                              Reprovado pela IA
-                            </button>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <button onClick={() => setAiModal({ open: true, decision: "reproved", id: r.id, reason: r.aiReason })} className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline cursor-pointer">
+                                  <Bot className="w-3.5 h-3.5" />
+                                  Reprovado pela IA
+                                </button>
+                              </TooltipTrigger>
+                              {r.aiReason && <TooltipContent className="max-w-xs"><p className="text-xs">{r.aiReason}</p></TooltipContent>}
+                            </Tooltip>
                           ) : (
                             <span className="text-xs text-muted-foreground">—</span>
                           )}
