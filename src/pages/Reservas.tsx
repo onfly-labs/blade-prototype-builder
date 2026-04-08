@@ -11,12 +11,13 @@ const tabs = ["Próximas viagens", "Minhas viagens", "Histórico"];
 
 type Reservation = {
   id: string;
+  numericId: number;
   type: string;
   icon: typeof Plane;
   origin: string;
   destination: string;
   date: string;
-  tripDate: string; // ISO date of the trip (first date)
+  tripDate: string;
   status: string;
   traveler: string;
   costCenter: string;
@@ -24,6 +25,16 @@ type Reservation = {
   hoursLeft: number;
   myTrip: boolean;
 };
+
+const typeSlugMap: Record<string, string> = {
+  "Aéreo": "fly",
+  "Hotel": "hotel",
+  "Carro": "car",
+  "Ônibus": "bus",
+};
+
+const getDetailUrl = (type: string, numericId: number) =>
+  `https://app.onfly.com/travel/#/travel/reserve-details/${typeSlugMap[type] || "fly"}/${numericId}`;
 
 const reservations: Reservation[] = [
   {
