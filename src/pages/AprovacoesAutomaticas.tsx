@@ -45,20 +45,22 @@ const AprovacoesAutomaticas = () => {
   };
 
   const handleToggle = (id: number) => {
-    setRules((prev) =>
-      prev.map((r) => {
-        if (r.id === id) {
-          const next = { ...r, active: !r.active };
-          toast({ title: next.active ? "Regra ativada" : "Regra desativada", description: `"${r.name}" foi ${next.active ? "ativada" : "desativada"}.` });
-          return next;
-        }
-        return r;
-      })
-    );
+    const updated = rules.map((r) => {
+      if (r.id === id) {
+        const next = { ...r, active: !r.active };
+        toast({ title: next.active ? "Regra ativada" : "Regra desativada", description: `"${r.name}" foi ${next.active ? "ativada" : "desativada"}.` });
+        return next;
+      }
+      return r;
+    });
+    setRules(updated);
+    saveRules(updated);
   };
 
   const handleDelete = (id: number) => {
-    setRules((prev) => prev.filter((r) => r.id !== id));
+    const updated = rules.filter((r) => r.id !== id);
+    setRules(updated);
+    saveRules(updated);
     toast({ title: "Regra removida" });
   };
 
