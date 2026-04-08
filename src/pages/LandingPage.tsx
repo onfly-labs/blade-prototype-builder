@@ -82,7 +82,7 @@ const LandingPage = () => {
                 <br />
                 Controle total.
               </h1>
-              <p className="text-lg text-gray-500 max-w-md mb-8 leading-relaxed">
+              <p className="text-lg text-white/70 max-w-md mb-8 leading-relaxed">
                 Reduza de horas para minutos o ciclo completo de reserva, aprovação e relatório de viagens corporativas.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
