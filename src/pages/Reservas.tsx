@@ -33,8 +33,10 @@ type Reservation = {
 
 const typeMap: Record<string, { label: string; icon: typeof Plane; slug: string }> = {
   FlightOrder: { label: "Aéreo", icon: Plane, slug: "fly" },
+  FlyOrder: { label: "Aéreo", icon: Plane, slug: "fly" },
   HotelOrder: { label: "Hotel", icon: Hotel, slug: "hotel" },
   CarRentalOrder: { label: "Carro", icon: Car, slug: "car" },
+  CarOrder: { label: "Carro", icon: Car, slug: "car" },
   BusOrder: { label: "Ônibus", icon: Bus, slug: "bus" },
 };
 
