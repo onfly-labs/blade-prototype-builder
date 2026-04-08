@@ -122,11 +122,21 @@ const Reservas = () => {
                       className={`text-xs font-medium px-2.5 py-1 rounded-full ${
                         r.status === "Confirmada"
                           ? "bg-green-100 text-green-700"
+                          : r.status === "Expirada"
+                          ? "bg-red-100 text-red-700"
                           : "bg-yellow-100 text-yellow-700"
                       }`}
                     >
                       {r.status}
                     </span>
+                  </td>
+                  <td className="px-5 py-4">
+                    {r.status === "Expirada" && (
+                      <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-lg">
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        Recotar
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
