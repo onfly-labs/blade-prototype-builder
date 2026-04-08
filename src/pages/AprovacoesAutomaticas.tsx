@@ -1,18 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
-import { ShieldCheck, Plus, ToggleLeft, ToggleRight, Trash2, Edit, Save, X, ChevronRight } from "lucide-react";
+import { ShieldCheck, Plus, ToggleLeft, ToggleRight, Trash2, Edit, Save, X, ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { getRules, saveRules, type Rule } from "@/lib/rulesStore";
+import { fetchRules, createRule, updateRule, deleteRule, type Rule } from "@/lib/rulesStore";
 
 type View = "list" | "form";
 
 const AprovacoesAutomaticas = () => {
   const [view, setView] = useState<View>("list");
-  const [rules, setRules] = useState<Rule[]>(getRules());
+  const [rules, setRules] = useState<Rule[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editingRule, setEditingRule] = useState<Rule | null>(null);
   const [formName, setFormName] = useState("");
   const [formDesc, setFormDesc] = useState("");
+
+  const loadRules = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchRules();
+      setRules(data);
+    } catch {
+      toast({ title: "Erro ao carregar regras", variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { loadRules(); }, []);
 
   const handleNewRule = () => {
     setEditingRule(null);
@@ -28,46 +43,46 @@ const AprovacoesAutomaticas = () => {
     setView("form");
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!formName.trim()) return;
-    let updated: Rule[];
-    if (editingRule) {
-      updated = rules.map((r) => (r.id === editingRule.id ? { ...r, name: formName, description: formDesc } : r));
-      toast({ title: "Regra atualizada", description: `"${formName}" foi salva com sucesso.` });
-    } else {
-      const newRule: Rule = { id: Date.now(), name: formName, description: formDesc, active: true };
-      updated = [...rules, newRule];
-      toast({ title: "Regra salva", description: `"${formName}" foi criada e ativada.` });
-    }
-    setRules(updated);
-    saveRules(updated);
-    setView("list");
-  };
-
-  const handleToggle = (id: number) => {
-    const updated = rules.map((r) => {
-      if (r.id === id) {
-        const next = { ...r, active: !r.active };
-        toast({ title: next.active ? "Regra ativada" : "Regra desativada", description: `"${r.name}" foi ${next.active ? "ativada" : "desativada"}.` });
-        return next;
+    try {
+      if (editingRule) {
+        await updateRule(editingRule.id, { name: formName, description: formDesc });
+        toast({ title: "Regra atualizada", description: `"${formName}" foi salva com sucesso.` });
+      } else {
+        await createRule(formName, formDesc);
+        toast({ title: "Regra salva", description: `"${formName}" foi criada e ativada.` });
       }
-      return r;
-    });
-    setRules(updated);
-    saveRules(updated);
+      await loadRules();
+      setView("list");
+    } catch {
+      toast({ title: "Erro ao salvar regra", variant: "destructive" });
+    }
   };
 
-  const handleDelete = (id: number) => {
-    const updated = rules.filter((r) => r.id !== id);
-    setRules(updated);
-    saveRules(updated);
-    toast({ title: "Regra removida" });
+  const handleToggle = async (rule: Rule) => {
+    try {
+      await updateRule(rule.id, { active: !rule.active });
+      setRules(prev => prev.map(r => r.id === rule.id ? { ...r, active: !r.active } : r));
+      toast({ title: !rule.active ? "Regra ativada" : "Regra desativada", description: `"${rule.name}" foi ${!rule.active ? "ativada" : "desativada"}.` });
+    } catch {
+      toast({ title: "Erro ao atualizar regra", variant: "destructive" });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteRule(id);
+      setRules(prev => prev.filter(r => r.id !== id));
+      toast({ title: "Regra removida" });
+    } catch {
+      toast({ title: "Erro ao remover regra", variant: "destructive" });
+    }
   };
 
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-8">
-        {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <button onClick={() => setView("list")} className="hover:text-foreground transition-colors">Aprovações Automáticas</button>
           {view === "form" && (
@@ -78,7 +93,6 @@ const AprovacoesAutomaticas = () => {
           )}
         </div>
 
-        {/* Rules List */}
         {view === "list" && (
           <>
             <div className="flex items-center gap-3 mb-6">
@@ -94,38 +108,41 @@ const AprovacoesAutomaticas = () => {
                 Nova regra
               </Button>
             </div>
-            <div className="space-y-3">
-              {rules.map((rule) => (
-                <div key={rule.id} className="bg-card border border-border rounded-2xl p-5 flex items-center justify-between">
-                  <div className="flex-1 mr-4">
-                    <p className="font-medium text-foreground">{rule.name}</p>
-                    <p className="text-sm text-muted-foreground">{rule.description}</p>
+            {loading ? (
+              <div className="flex justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
+            ) : (
+              <div className="space-y-3">
+                {rules.map((rule) => (
+                  <div key={rule.id} className="bg-card border border-border rounded-2xl p-5 flex items-center justify-between">
+                    <div className="flex-1 mr-4">
+                      <p className="font-medium text-foreground">{rule.name}</p>
+                      <p className="text-sm text-muted-foreground">{rule.description}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => handleToggle(rule)} className="transition-colors">
+                        {rule.active ? <ToggleRight className="w-8 h-8 text-primary" /> : <ToggleLeft className="w-8 h-8 text-muted-foreground" />}
+                      </button>
+                      <button onClick={() => handleEditRule(rule)} className="p-1.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground">
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button onClick={() => handleDelete(rule.id)} className="p-1.5 rounded-lg hover:bg-destructive/10 transition-colors text-muted-foreground hover:text-destructive">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <button onClick={() => handleToggle(rule.id)} className="transition-colors">
-                      {rule.active ? <ToggleRight className="w-8 h-8 text-primary" /> : <ToggleLeft className="w-8 h-8 text-muted-foreground" />}
-                    </button>
-                    <button onClick={() => handleEditRule(rule)} className="p-1.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground">
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button onClick={() => handleDelete(rule.id)} className="p-1.5 rounded-lg hover:bg-destructive/10 transition-colors text-muted-foreground hover:text-destructive">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                ))}
+                {rules.length === 0 && (
+                  <div className="text-center py-16 text-muted-foreground">
+                    <ShieldCheck className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                    <p>Nenhuma regra cadastrada</p>
+                    <Button onClick={handleNewRule} variant="outline" className="mt-4 rounded-xl">Criar primeira regra</Button>
                   </div>
-                </div>
-              ))}
-              {rules.length === 0 && (
-                <div className="text-center py-16 text-muted-foreground">
-                  <ShieldCheck className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                  <p>Nenhuma regra cadastrada</p>
-                  <Button onClick={handleNewRule} variant="outline" className="mt-4 rounded-xl">Criar primeira regra</Button>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </>
         )}
 
-        {/* Rule Form */}
         {view === "form" && (
           <>
             <h1 className="text-xl font-bold text-foreground mb-6">{editingRule ? "Editar regra" : "Nova regra"}</h1>
